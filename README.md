@@ -1,2 +1,7 @@
 # auto_grader
- A Progeram that can auto evaluate simple programs
+ A Program that can auto evaluate simple programs
+
+
+
+ 
+
