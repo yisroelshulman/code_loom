@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "compilation.h"
+#include "File.h"
 
 // does a byte by byte comparison of len bytes from str1 and str2 starting at the start byte of str1
 // return true on a match and false otherwise
@@ -42,8 +42,7 @@ bool init_file(File *file, const char* source)
     file->filenamelen = 0;
     file->pathlen = 0;
     file->language = NONE;
-    file->cancompile = false;
-    file->canrun = false;
+    file->compiled = false;
     while (file->filenamelen < MAX_FILE_NAME_LEN && source[file->filenamelen] != '\0')
     {
         // ensures the file name is non empty
@@ -54,7 +53,6 @@ bool init_file(File *file, const char* source)
             {
                 file->absolutefilepath[file->filenamelen] = '\0'; // nul terminate the stirng
                 file->filenamelen++;
-                file->cancompile = true;
                 return true; // extention recognized
             }
         }
@@ -70,22 +68,32 @@ bool init_file(File *file, const char* source)
     return false; // extention not recognized
 }
 
+// takes a File and runs the proper compile command for that language
+// compilation errors are redirected to a default file to be reported to the user
+// returns true if the sourcecode was compiled
+// returns false if the file didn't compile
 bool compile_file(File *file)
 {
-    char compilecommand[MAX_FILE_NAME_LEN + 20]; // reconsider position
+    char compilecommand[MAX_FILE_NAME_LEN + 30]; // reconsider position
+    char* errorredirect = "2>error.txt"; // the file where compilation errors are recorded
 
     switch (file->language)
     {
         case JAVA:
         {
-            snprintf(compilecommand, sizeof(compilecommand), "javac %s.java", file->absolutefilepath);
-
-            return system(compilecommand) == 0;
+            snprintf(compilecommand, sizeof(compilecommand), "javac %s.java %s", file->absolutefilepath, errorredirect);
+            int result = system(compilecommand);
+            if (result == 0)
+            {
+                file->compiled = true;
+                return true;
+            }
+            break;
         }
         case NONE:
             fprintf(stderr, "Unrecognized file type.\n");
     }
-    return false;
+    return false; // did not compile
 }
 
 static void print_lang(File* file)

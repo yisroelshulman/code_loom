@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -g
-FILES = main.c compilation.c
+FILES = main.c File.c
 
 
 all:
