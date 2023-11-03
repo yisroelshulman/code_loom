@@ -77,7 +77,11 @@ typedef struct
 void init_scanner(const char* source);
 
 /*
- * The scan_token function
+ * The scan_token function scans a single token from the source code and returns it
+ *
+ * @ returns
+ *      the token that was scanned
+ *      on failure the token returned is an error token that contains the error message
  */
 Token scan_token();
 

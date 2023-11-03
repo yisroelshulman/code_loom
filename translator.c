@@ -1,5 +1,6 @@
 
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "translator.h"
 #include "scanner.h"
@@ -9,13 +10,28 @@ typedef struct
     Token current;
     Token previous;
     bool haderror;
-    bool panicmode;
 } Parser;
 
 
 Parser parser;
 
 
+static void error(Token* token, const char* message)
+{
+    fprintf(stderr, "[line %d] Error", token->line);
+
+    if (token->type == TOKEN_EOF)
+    {
+        fprintf(stderr, " at end");
+    }
+    else
+    {
+        fprintf(stderr, " at '%.*s'", token->length, token->start);
+    }
+
+    fprintf(stderr, " : %s\n", message);
+    parser.haderror = true;
+}
 
 static void advance()
 {
@@ -27,7 +43,7 @@ static void advance()
         if (parser.current.type == TOKEN_COMMENT) continue;
         if (parser.current.type != TOKEN_ERROR) break;
 
-        error_at_current(parser.current.start);
+        error(&parser.current, parser.current.start);
     }
 }
 
@@ -44,12 +60,11 @@ static bool match(TokenType type)
 }
 
 
-bool convert(const char* source)
+bool translate(const char* source)
 {
     init_scanner(source);
 
     parser.haderror = false;
-    parser.panicmode = false;
 
     advance();
 

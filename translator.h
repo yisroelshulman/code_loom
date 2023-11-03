@@ -1,6 +1,12 @@
-#ifndef CONVERTER_H
-#define CONVERTER_H
+#ifndef AG_TRANSLATOR_H
+#define AG_TRANSLATOR_H
 
-bool convert(const char *source);
+// functions
+// -------------------------------------------------------------------------------------------------
+
+/*
+ * 
+ */
+bool translate(const char *source);
 
 #endif
