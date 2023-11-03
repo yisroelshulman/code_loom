@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "File.h"
+#include "file.h"
 
 // does a byte by byte comparison of len bytes from str1 and str2 starting at the start byte of str1
 // return true on a match and false otherwise
@@ -70,7 +70,7 @@ bool init_file(File *file, const char* source)
 
 // takes a File and runs the proper compile command for that language
 // compilation errors are redirected to a default file to be reported to the user
-// returns true if the sourcecode was compiled
+// returns true if the source code was compiled
 // returns false if the file didn't compile
 bool compile_file(File *file)
 {
@@ -95,6 +95,10 @@ bool compile_file(File *file)
     }
     return false; // did not compile
 }
+
+// to be removed
+// =================================================================================================
+// =================================================================================================
 
 static void print_lang(File* file)
 {

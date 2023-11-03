@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -g
-FILES = main.c File.c
+FILES = main.c file.c scanner.c
 
 
 all:
