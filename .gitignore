@@ -52,6 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Test and Temp files
+~$log.xlsx
 *.java
 *.class
 out.txt

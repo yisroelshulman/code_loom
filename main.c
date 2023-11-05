@@ -4,13 +4,14 @@
 
 
 #include "file.h"
+#include "translator.h"
 
 typedef enum
 {
     SUBMIT,
     CHECK,
-    PRACTICE,
     HELP,
+    TEST,
     ERROR
 } OP;
 
@@ -64,6 +65,11 @@ int main(int argc, char *argv[])
                 case HELP:
                         printf("help\n");
                         break;
+                case TEST:
+                {
+                    translate_file(argv[2]);
+                    break;
+                }
                 default:
                         printf("error\n");
                         break;
@@ -74,9 +80,6 @@ int main(int argc, char *argv[])
             {
                 case HELP:
                     printf("help\n");
-                    break;
-                case PRACTICE:
-                    printf("practice\n");
                     break;
                 default:
                     printf("error\n");
@@ -101,8 +104,8 @@ OP get_op(char* op)
     {
         case 's':   return match_op(op, 6, "ubmit\0", SUBMIT);
         case 'c':   return match_op(op, 5, "heck\0", CHECK);
-        case 'p':   return match_op(op, 8, "ractice\0", PRACTICE);
         case 'h':   return match_op(op, 4, "elp\0", HELP);
+        case 't':   return match_op(op, 4, "est\0", TEST);
     }
 
     return ERROR;

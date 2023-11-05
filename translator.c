@@ -1,5 +1,6 @@
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "translator.h"
@@ -71,9 +72,111 @@ bool translate(const char* source)
     while (!match(TOKEN_EOF))
     {
         // sdd
-        print_token();
+        print_token(&parser.current);
+        advance();
     }
 
-    end_process();
+    print_token(&parser.current);
+
     return !parser.haderror;
+}
+
+static char* read_file(const char* path)
+{
+
+    FILE* file = fopen(path, "rb");
+    if (file == NULL)
+    {
+        fprintf(stderr, "Could not open file \"%s\"\n", path);
+        return NULL;
+    }
+
+    fseek(file, 0L, SEEK_END);
+    size_t filesize = ftell(file);
+    rewind(file);
+
+    char* buffer = (char*)malloc(filesize + 1);
+    if (buffer == NULL)
+    {
+        fprintf(stderr, "Not enough memory to read \"%s\"\n", path);
+        return NULL;
+    }
+
+    size_t bytesread = fread(buffer, sizeof(char), filesize, file);
+    if (bytesread < filesize)
+    {
+        fprintf(stderr, "Could not read file \"%s\"\n", path);
+        return NULL;
+    }
+
+    buffer[bytesread] = '\0'; // nul terminate
+    return buffer;
+}
+
+TranslateResult translate_file(const char* path)
+{
+
+    char* source = read_file(path);
+    if (source == NULL)
+    {
+        return READ_ERROR;
+    }
+    bool result = translate(source);
+    free(source);
+
+    if (!result)
+    {
+        return TRANSLATION_ERROR;
+    }
+    return SUCCESS;
+}
+
+
+// =================================================================================================
+// to remove
+// =================================================================================================
+
+typedef struct
+{
+    char *tokenz;
+} Tokenz;
+
+Tokenz ptoken[] = {
+    // symbols
+    [TOKEN_LEFT_PARENT] = "left parent",
+    [TOKEN_RIGHT_PARENT] = "right parent",
+    [TOKEN_LEFT_BRACE] = "left brace",
+    [TOKEN_RIGHT_BRACE] = "right brace",
+    [TOKEN_LEFT_BRACKET] = "left bracket",
+    [TOKEN_RIGHT_BRACKET] = "right bracket",
+    [TOKEN_COLON] = "colon",
+    [TOKEN_DOUBLE_QUOTE] = "double quote",
+    [TOKEN_SINGLE_QUOTE] = "single quote",
+    [TOKEN_HASHTAG] = "hashtag",
+
+    // literals
+    [TOKEN_NUMBER] = "number",
+    [TOKEN_STRING] = "string",
+    [TOKEN_COMMENT] = "comment",
+
+    // keywords
+    [TOKEN_CHECK] = "check",
+    [TOKEN_INPUT] = "input",
+    [TOKEN_OUTPUT] = "output",
+    [TOKEN_BOOL] = "bool",
+    [TOKEN_NUM] = "num",
+    [TOKEN_STR] = "str",
+    [TOKEN_LIST] = "list",
+    [TOKEN_TRUE] = "true",
+    [TOKEN_FALSE] = "false",
+
+    // other
+    [TOKEN_ERROR] = "error",
+    [TOKEN_EOF] = "eof"
+
+};
+
+void print_token(Token* token)
+{
+    printf("%s\n", ptoken[token->type].tokenz);
 }

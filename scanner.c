@@ -101,6 +101,7 @@ static Token error_token(const char* message)
     token.start = message;
     token.length = (int)strlen(message); // message is always nul terminated
     token.line = scanner.line;
+    return token;
 }
 
 // checks if the remaining letters makes a keyword, return the keyword token if successful otherwise
@@ -125,6 +126,7 @@ static TokenType keyword_type()
         case 'l': return check_keyword(1, 3, "ist", TOKEN_LIST);
         case 't': return check_keyword(1, 3, "rue", TOKEN_TRUE);
         case 'f': return check_keyword(1, 4, "alse", TOKEN_FALSE);
+        case 'c': return check_keyword(1, 4, "heck", TOKEN_CHECK);
     }
 
     return TOKEN_ERROR;
@@ -168,7 +170,7 @@ static Token string(const char quote, TokenType type)
 
     if (is_at_end()) return error_token("Unterminated string.");
     advance(); // consume closing quote
-    return make_token(type);
+    return make_token(TOKEN_STRING);
 }
 
 // scans and returns a comment token
@@ -180,7 +182,7 @@ static Token line_comment()
 }
 
 // scans and returns the next token in the sourcecode file
-Token scan_Token()
+Token scan_token()
 {
     skip_whitespace();
     scanner.start = scanner.current;

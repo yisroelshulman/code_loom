@@ -22,6 +22,7 @@ typedef enum
     TOKEN_COMMENT,
 
     // keywords
+    TOKEN_CHECK,
     TOKEN_INPUT,
     TOKEN_OUTPUT,
     TOKEN_BOOL,

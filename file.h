@@ -1,7 +1,7 @@
-#include <stdbool.h>
-
 #ifndef AG_FILE_H
 #define AG_FILE_H
+
+#include <stdbool.h>
 
 #define MAX_FILE_NAME_LEN 1028
 
