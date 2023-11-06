@@ -12,6 +12,8 @@ typedef struct
     Token current;
     Token previous;
     bool haderror;
+    TestCase testcase;
+    bool isaddable;
 } Parser;
 
 
@@ -72,28 +74,28 @@ static void consume(TokenType type, const char* message)
     error(&parser.current, message);
 }
 
-static void block(TestCase* testcase)
+static void block()
 {
-    if (!match(TOKEN_LEFT_BRACE))
-    {
-
-    }
+    consume(TOKEN_RIGHT_BRACE, "Expected '{' to start a test case.\n");
     input();
     output();
+    consume(TOKEN_LEFT_BRACE, "Expected '}' to end a block.\n");
 }
 
 static void test_case()
 {
     TestCase testcase;
-    testcase.ischeckcase = match(TOKEN_CHECK);
-    if (testcase.ischeckcase)
+    parser.testcase = testcase;
+    parser.testcase.ischeckcase = match(TOKEN_CHECK);
+    parser.isaddable = true;
+    if (parser.testcase.ischeckcase)
     {
         consume(TOKEN_COLON, "Expected ':' after check declaration.\n");
     }
 
-    block(&test_case);
+    block();
 
-    add_test_case(&testcase);
+    if (parser.isaddable) add_test_case(&parser.testcase);
     return;
 }
 
