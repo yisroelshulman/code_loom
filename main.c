@@ -4,6 +4,7 @@
 
 
 #include "file.h"
+#include "io.h"
 #include "translator.h"
 
 typedef enum
@@ -67,7 +68,9 @@ int main(int argc, char *argv[])
                         break;
                 case TEST:
                 {
-                    translate_file(argv[2]);
+                    IO io;
+
+                    translate_file(argv[2], &io);
                     break;
                 }
                 default:

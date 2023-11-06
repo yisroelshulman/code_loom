@@ -12,21 +12,20 @@ typedef struct
 
 typedef struct
 {
-    bool  istestcase;
+    bool  ischeckcase;
     Stream* input;
     Stream* output;
-} Case;
+} TestCase;
 
 typedef struct
 {
-    Case* cases;
-    int numcases;
+    TestCase* testcases;
+    int numtestcases;
     int capacity;
 } IO;
 
 void init_io(IO* io);
 void free_io(IO* io);
-void add_input(IO* io);
-void add_output(IO* io);
+void add_test_case(TestCase* testcase);
 
 #endif

@@ -4,7 +4,8 @@
 #include <stdio.h>
 
 #include "translator.h"
-#include "scanner.h"
+//#include "scanner.h"
+//#include "io.h"
 
 typedef struct
 {
@@ -15,6 +16,7 @@ typedef struct
 
 
 Parser parser;
+IO* translatingio;
 
 
 static void error(Token* token, const char* message)
@@ -60,10 +62,23 @@ static bool match(TokenType type)
     return true;
 }
 
+static void test_case()
+{
+    TestCase testcase;
+    testcase.ischeckcase = match(TOKEN_CHECK);
 
-bool translate(const char* source)
+    block(&test_case);
+
+    add_test_case(&testcase);
+    return;
+}
+
+
+static bool translate(const char* source, IO* io)
 {
     init_scanner(source);
+
+    translatingio = io;
 
     parser.haderror = false;
 
@@ -71,9 +86,10 @@ bool translate(const char* source)
 
     while (!match(TOKEN_EOF))
     {
+        test_case();
         // sdd
-        print_token(&parser.current);
-        advance();
+        // print_token(&parser.current);
+        // advance();
     }
 
     print_token(&parser.current);
@@ -113,15 +129,14 @@ static char* read_file(const char* path)
     return buffer;
 }
 
-TranslateResult translate_file(const char* path)
+TranslateResult translate_file(const char* path, IO* io)
 {
-
     char* source = read_file(path);
     if (source == NULL)
     {
         return READ_ERROR;
     }
-    bool result = translate(source);
+    bool result = translate(source, io);
     free(source);
 
     if (!result)
@@ -136,12 +151,7 @@ TranslateResult translate_file(const char* path)
 // to remove
 // =================================================================================================
 
-typedef struct
-{
-    char *tokenz;
-} Tokenz;
-
-Tokenz ptoken[] = {
+char* ptoken[] = {
     // symbols
     [TOKEN_LEFT_PARENT] = "left parent",
     [TOKEN_RIGHT_PARENT] = "right parent",
@@ -178,5 +188,5 @@ Tokenz ptoken[] = {
 
 void print_token(Token* token)
 {
-    printf("%s\n", ptoken[token->type].tokenz);
+    printf("%s\n", ptoken[token->type]);
 }

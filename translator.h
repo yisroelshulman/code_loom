@@ -2,6 +2,7 @@
 #define AG_SUL_TRANSLATOR_H
 
 #include "scanner.h"
+#include "io.h"
 
 typedef enum
 {
@@ -16,7 +17,7 @@ typedef enum
 /*
  * 
  */
-TranslateResult translate_file(const char* path);
+TranslateResult translate_file(const char* path, IO* io);
 
 // temp functions to test to remove
 // -------------------------------------------------------------------------------------------------
