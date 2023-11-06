@@ -12,6 +12,7 @@ typedef struct
     Token current;
     Token previous;
     bool haderror;
+    bool panicmode;
     TestCase testcase;
     bool isaddable;
 } Parser;
@@ -23,6 +24,9 @@ IO* translatingio;
 
 static void error(Token* token, const char* message)
 {
+    if (parser.panicmode) return;
+    parser.panicmode = true;
+
     fprintf(stderr, "[line %d] Error", token->line);
 
     if (token->type == TOKEN_EOF)
@@ -74,12 +78,44 @@ static void consume(TokenType type, const char* message)
     error(&parser.current, message);
 }
 
+static void synchronize()
+{
+    parser.panicmode = false;
+
+    while (parser.current.type != TOKEN_EOF)
+    {
+        if (parser.previous.type == TOKEN_RIGHT_BRACE) return;
+        switch(parser.current.type)
+        {
+            case TOKEN_LEFT_BRACE:
+            case TOKEN_CHECK:
+                return;
+
+            default:
+                break;
+        }
+    }
+}
+
+static void input()
+{
+    
+}
+
+static void output()
+{
+
+}
+
 static void block()
 {
-    consume(TOKEN_RIGHT_BRACE, "Expected '{' to start a test case.\n");
+    consume(TOKEN_INPUT, "Expected 'input' at the start of a block.\n");
+    consume(TOKEN_LEFT_PARENT, "Expected '(' to start an input statement.\n");
     input();
+    consume(TOKEN_OUTPUT, "Expected 'output' after input statement.\n");
+    consume(TOKEN_LEFT_PARENT, "Expected (' to start an output statement.\n");
     output();
-    consume(TOKEN_LEFT_BRACE, "Expected '}' to end a block.\n");
+    consume(TOKEN_RIGHT_BRACE, "Expected '}' to end a test case.\n");
 }
 
 static void test_case()
@@ -88,14 +124,12 @@ static void test_case()
     parser.testcase = testcase;
     parser.testcase.ischeckcase = match(TOKEN_CHECK);
     parser.isaddable = true;
-    if (parser.testcase.ischeckcase)
-    {
-        consume(TOKEN_COLON, "Expected ':' after check declaration.\n");
-    }
+    consume(TOKEN_LEFT_BRACE, "Expected '{' to start a test case.\n"); 
 
     block();
 
     if (parser.isaddable) add_test_case(&parser.testcase);
+    if (parser.panicmode) synchronize();
     return;
 }
 
@@ -107,6 +141,7 @@ static bool translate(const char* source, IO* io)
     translatingio = io;
 
     parser.haderror = false;
+    parser.panicmode = false;
 
     advance();
 
@@ -177,7 +212,7 @@ TranslateResult translate_file(const char* path, IO* io)
 // to remove
 // =================================================================================================
 
-char* ptoken[] = {
+char *ptoken[] = {
     // symbols
     [TOKEN_LEFT_PARENT] = "left parent",
     [TOKEN_RIGHT_PARENT] = "right parent",
@@ -199,12 +234,14 @@ char* ptoken[] = {
     [TOKEN_CHECK] = "check",
     [TOKEN_INPUT] = "input",
     [TOKEN_OUTPUT] = "output",
-    [TOKEN_BOOL] = "bool",
-    [TOKEN_NUM] = "num",
-    [TOKEN_STR] = "str",
     [TOKEN_LIST] = "list",
     [TOKEN_TRUE] = "true",
     [TOKEN_FALSE] = "false",
+
+    // keywords for literal type declarations
+    [TOKEN_BOOL] = "bool",
+    [TOKEN_NUM] = "num",
+    [TOKEN_STR] = "str",
 
     // other
     [TOKEN_ERROR] = "error",

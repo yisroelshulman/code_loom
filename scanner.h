@@ -25,12 +25,14 @@ typedef enum
     TOKEN_CHECK,
     TOKEN_INPUT,
     TOKEN_OUTPUT,
-    TOKEN_BOOL,
-    TOKEN_NUM,
-    TOKEN_STR,
     TOKEN_LIST,
     TOKEN_TRUE,
     TOKEN_FALSE,
+
+    // keywords for literal type declarations
+    TOKEN_BOOL,
+    TOKEN_NUM,
+    TOKEN_STR,
 
     // other
     TOKEN_ERROR,
