@@ -27,6 +27,8 @@ static void error(Token* token, const char* message)
     if (parser.panicmode) return;
     parser.panicmode = true;
 
+    parser.isaddable = false;
+
     fprintf(stderr, "[line %d] Error", token->line);
 
     if (token->type == TOKEN_EOF)
@@ -97,9 +99,43 @@ static void synchronize()
     }
 }
 
+static void number(canbelist)
+{
+
+}
+
+static void string(bool canbelist)
+{
+
+}
+
+static void boolean(bool canbelist)
+{
+
+}
+
 static void input()
 {
-    
+    advance();
+    switch (parser.previous.type)
+    {
+        case TOKEN_NUM:
+            consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
+            number(true);
+            break;
+        case TOKEN_STR:
+            consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
+            string(true);
+            break;
+        case TOKEN_BOOL:
+            consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
+            boolean(true);
+            break;
+        default:
+            error(&parser.previous, "Data type expected.\n");
+
+    }
+    consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the input.\n");
 }
 
 static void output()
