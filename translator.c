@@ -62,10 +62,34 @@ static bool match(TokenType type)
     return true;
 }
 
+static void consume(TokenType type, const char* message)
+{
+    if (parser.current.type == type)
+    {
+        advance();
+        return;
+    }
+    error(&parser.current, message);
+}
+
+static void block(TestCase* testcase)
+{
+    if (!match(TOKEN_LEFT_BRACE))
+    {
+
+    }
+    input();
+    output();
+}
+
 static void test_case()
 {
     TestCase testcase;
     testcase.ischeckcase = match(TOKEN_CHECK);
+    if (testcase.ischeckcase)
+    {
+        consume(TOKEN_COLON, "Expected ':' after check declaration.\n");
+    }
 
     block(&test_case);
 
