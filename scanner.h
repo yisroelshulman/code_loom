@@ -19,6 +19,7 @@ typedef enum
     // literals
     TOKEN_NUMBER,
     TOKEN_STRING,
+    TOKEN_BOOLEAN,
     TOKEN_COMMENT,
 
     // keywords
@@ -36,7 +37,10 @@ typedef enum
 
     // other
     TOKEN_ERROR,
-    TOKEN_EOF
+    TOKEN_EOF,
+
+    // not to be used while scanning
+    TOKEN_NONE
 
 } TokenType;
 

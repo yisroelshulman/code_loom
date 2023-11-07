@@ -1,7 +1,10 @@
-#include <stdbool.h>
-
 #ifndef IO_H
 #define IO_H
+
+#include <stdbool.h>
+#include <stddef.h>
+
+#include "scanner.h"
 
 typedef struct
 {
@@ -24,8 +27,12 @@ typedef struct
     int capacity;
 } IO;
 
+void init_stream();
+size_t write_stream(Stream* stream, const Token token);
+
+void add_test_case(TestCase *testcase);
+
 void init_io(IO* io);
 void free_io(IO* io);
-void add_test_case(TestCase* testcase);
 
 #endif

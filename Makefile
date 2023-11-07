@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g
+CFLAGS = -g -Wall
 FILES = main.c file.c scanner.c translator.c io.c
 
 

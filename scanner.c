@@ -124,8 +124,8 @@ static TokenType keyword_type()
         case 'n': return check_keyword(1, 2, "um", TOKEN_NUM);
         case 'b': return check_keyword(1, 3, "ool", TOKEN_BOOL);
         case 'l': return check_keyword(1, 3, "ist", TOKEN_LIST);
-        case 't': return check_keyword(1, 3, "rue", TOKEN_TRUE);
-        case 'f': return check_keyword(1, 4, "alse", TOKEN_FALSE);
+        case 't': return check_keyword(1, 3, "rue", TOKEN_BOOLEAN);
+        case 'f': return check_keyword(1, 4, "alse", TOKEN_BOOLEAN);
         case 'c': return check_keyword(1, 4, "heck", TOKEN_CHECK);
     }
 

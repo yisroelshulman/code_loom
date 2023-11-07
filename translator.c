@@ -13,7 +13,7 @@ typedef struct
     Token previous;
     bool haderror;
     bool panicmode;
-    TestCase testcase;
+    TestCase* testcase;
     bool isaddable;
 } Parser;
 
@@ -47,13 +47,11 @@ static void error(Token* token, const char* message)
 static void advance()
 {
     parser.previous = parser.current;
-
     for (;;)
     {
         parser.current = scan_token();
         if (parser.current.type == TOKEN_COMMENT) continue;
         if (parser.current.type != TOKEN_ERROR) break;
-
         error(&parser.current, parser.current.start);
     }
 }
@@ -99,41 +97,51 @@ static void synchronize()
     }
 }
 
-static void number(canbelist)
+static TokenType get_data_type()
 {
-
+    switch (parser.current.type)
+    {
+        case TOKEN_NUM:        return TOKEN_NUMBER;
+        case TOKEN_STR:        return TOKEN_STRING;
+        case TOKEN_BOOL:       return TOKEN_BOOLEAN;
+        default:               break;
+    }
+    return TOKEN_NONE;
 }
 
-static void string(bool canbelist)
+static bool add_to_stream(Stream* stream)
 {
-
-}
-
-static void boolean(bool canbelist)
-{
-
+    if (write_stream(stream, parser.previous) == 0)
+    {
+        error(&parser.previous, "Could't add to stream.\n");
+        return false;
+    }
+    return true;
 }
 
 static void input()
 {
+    TokenType datatype = get_data_type();
     advance();
-    switch (parser.previous.type)
-    {
-        case TOKEN_NUM:
-            consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
-            number(true);
-            break;
-        case TOKEN_STR:
-            consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
-            string(true);
-            break;
-        case TOKEN_BOOL:
-            consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
-            boolean(true);
-            break;
-        default:
-            error(&parser.previous, "Data type expected.\n");
 
+    consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
+
+    Stream input;
+    init_stream(&input);
+
+    if (match(TOKEN_LIST))
+    {
+        consume(TOKEN_LEFT_BRACKET, "Expected '[' to start a list.\n");
+        while (match(datatype) && add_to_stream(&input));
+        if (input.length == 0) error(&parser.current, "Expected at least one list input.\n");
+        consume(TOKEN_LEFT_BRACKET, "Expected '[' to start a list.\n");
+    }
+    else
+    {
+        if (!match(datatype) || !add_to_stream(&input))
+        {
+            error(&parser.current, "Expected at least one list input.\n");
+        }
     }
     consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the input.\n");
 }
@@ -157,14 +165,14 @@ static void block()
 static void test_case()
 {
     TestCase testcase;
-    parser.testcase = testcase;
-    parser.testcase.ischeckcase = match(TOKEN_CHECK);
+    parser.testcase = &testcase;
+    parser.testcase->ischeckcase = match(TOKEN_CHECK);
     parser.isaddable = true;
     consume(TOKEN_LEFT_BRACE, "Expected '{' to start a test case.\n"); 
 
     block();
 
-    if (parser.isaddable) add_test_case(&parser.testcase);
+    if (parser.isaddable) add_test_case(parser.testcase);
     if (parser.panicmode) synchronize();
     return;
 }
@@ -248,7 +256,7 @@ TranslateResult translate_file(const char* path, IO* io)
 // to remove
 // =================================================================================================
 
-char *ptoken[] = {
+char *tokenasstring[] = {
     // symbols
     [TOKEN_LEFT_PARENT] = "left parent",
     [TOKEN_RIGHT_PARENT] = "right parent",
@@ -264,6 +272,7 @@ char *ptoken[] = {
     // literals
     [TOKEN_NUMBER] = "number",
     [TOKEN_STRING] = "string",
+    [TOKEN_BOOLEAN] = "boolean",
     [TOKEN_COMMENT] = "comment",
 
     // keywords
@@ -281,11 +290,12 @@ char *ptoken[] = {
 
     // other
     [TOKEN_ERROR] = "error",
-    [TOKEN_EOF] = "eof"
+    [TOKEN_EOF] = "eof",
 
-};
+    // not to be used while scanning
+    [TOKEN_NONE] = "none"};
 
 void print_token(Token* token)
 {
-    printf("%s\n", ptoken[token->type]);
+    printf("%s\n", tokenasstring[token->type]);
 }
