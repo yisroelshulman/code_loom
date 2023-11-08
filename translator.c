@@ -126,8 +126,6 @@ static void input()
 
     consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
 
-    init_stream(&parser.testcase->input);
-
     if (match(TOKEN_LIST))
     {
         consume(TOKEN_LEFT_BRACKET, "Expected '[' to start a list.\n");
@@ -147,7 +145,16 @@ static void input()
 
 static void output()
 {
-    while (!(parser.current.type == TOKEN_RIGHT_BRACE) && !(parser.current.type == TOKEN_EOF)) advance();
+    TokenType datatype = get_data_type();
+    advance();
+
+    consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
+
+    if (!match(datatype) || !add_to_stream(&parser.testcase->output))
+    {
+        error(&parser.current, "Expected at least one list input.\n");
+    } 
+    consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the input.\n");
 }
 
 static void block()
@@ -164,6 +171,7 @@ static void block()
 static void test_case()
 {
     TestCase testcase;
+    init_test_case(&testcase);
     parser.testcase = &testcase;
     parser.testcase->ischeckcase = match(TOKEN_CHECK);
     parser.isaddable = true;
@@ -197,9 +205,9 @@ static bool translate(const char* source, IO* io)
         // advance();
     }
 
-    print_io(translatingio);
+    print_io(translatingio); // remove
 
-    print_token(&parser.current);
+    print_token(&parser.current); // remove
 
     return !parser.haderror;
 }
@@ -304,13 +312,19 @@ void print_token(Token* token)
 
 void print_input(Stream *stream)
 {
-    printf("input %s\n", stream->stream);
+    printf("input: %s\n", stream->stream);
+}
+
+void print_output(Stream *stream)
+{
+    printf("output: %s\n", stream->stream);
 }
 
 void print_case(TestCase* testcase)
 {
     printf("is test case? %d\n", testcase->ischeckcase);
     print_input(&testcase->input);
+    print_input(&testcase->output);
 }
 
 void print_io(IO* io)

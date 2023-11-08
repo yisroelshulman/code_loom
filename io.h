@@ -27,8 +27,9 @@ typedef struct
     int capacity;
 } IO;
 
-void init_stream(Stream* stream);
 size_t write_stream(Stream* stream, const Token token);
+
+void init_test_case(TestCase* testcase);
 
 
 void init_io(IO* io);

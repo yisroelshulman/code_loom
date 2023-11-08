@@ -3,7 +3,7 @@
 
 #include "io.h"
 
-void init_stream(Stream* stream)
+static void init_stream(Stream* stream)
 {
     stream->stream = NULL;
     stream->length = 0;
@@ -29,6 +29,13 @@ size_t write_stream(Stream *stream, const Token token)
     }
 
     return token.length + 2;
+}
+
+void init_test_case(TestCase *testcase)
+{
+    testcase->ischeckcase = false;
+    init_stream(&testcase->input);
+    init_stream(&testcase->output);
 }
 
 void init_io(IO *io)
