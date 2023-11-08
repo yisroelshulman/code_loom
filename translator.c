@@ -126,19 +126,18 @@ static void input()
 
     consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
 
-    Stream input;
-    init_stream(&input);
+    init_stream(&parser.testcase->input);
 
     if (match(TOKEN_LIST))
     {
         consume(TOKEN_LEFT_BRACKET, "Expected '[' to start a list.\n");
-        while (match(datatype) && add_to_stream(&input));
-        if (input.length == 0) error(&parser.current, "Expected at least one list input.\n");
-        consume(TOKEN_LEFT_BRACKET, "Expected '[' to start a list.\n");
+        while (match(datatype) && add_to_stream(&parser.testcase->input));
+        if (&parser.testcase->input.length == 0) error(&parser.current, "Expected at least one list input.\n");
+        consume(TOKEN_RIGHT_BRACKET, "Expected ']' to end the list.\n");
     }
     else
     {
-        if (!match(datatype) || !add_to_stream(&input))
+        if (!match(datatype) || !add_to_stream(&parser.testcase->input))
         {
             error(&parser.current, "Expected at least one list input.\n");
         }
@@ -148,7 +147,7 @@ static void input()
 
 static void output()
 {
-
+    while (!(parser.current.type == TOKEN_RIGHT_BRACE) && !(parser.current.type == TOKEN_EOF)) advance();
 }
 
 static void block()
@@ -172,7 +171,8 @@ static void test_case()
 
     block();
 
-    if (parser.isaddable) add_test_case(parser.testcase);
+    if (parser.isaddable) add_test_case(translatingio, parser.testcase);
+
     if (parser.panicmode) synchronize();
     return;
 }
@@ -196,6 +196,8 @@ static bool translate(const char* source, IO* io)
         // print_token(&parser.current);
         // advance();
     }
+
+    print_io(translatingio);
 
     print_token(&parser.current);
 
@@ -298,4 +300,25 @@ char *tokenasstring[] = {
 void print_token(Token* token)
 {
     printf("%s\n", tokenasstring[token->type]);
+}
+
+void print_input(Stream *stream)
+{
+    printf("input %s\n", stream->stream);
+}
+
+void print_case(TestCase* testcase)
+{
+    printf("is test case? %d\n", testcase->ischeckcase);
+    print_input(&testcase->input);
+}
+
+void print_io(IO* io)
+{
+    printf("cap = %d, count = %d\n", io->capacity, io->numtestcases);
+    for (int i = 0; i < io->numtestcases; i ++)
+    {
+        printf("test case %d:\n------------------\n", i);
+        print_case(&io->testcases[i]);
+    }
 }

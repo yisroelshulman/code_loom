@@ -16,8 +16,8 @@ typedef struct
 typedef struct
 {
     bool  ischeckcase;
-    Stream* input;
-    Stream* output;
+    Stream input;
+    Stream output;
 } TestCase;
 
 typedef struct
@@ -30,9 +30,10 @@ typedef struct
 void init_stream(Stream* stream);
 size_t write_stream(Stream* stream, const Token token);
 
-void add_test_case(TestCase *testcase);
 
 void init_io(IO* io);
 void free_io(IO* io);
+bool add_test_case(IO *io, const TestCase *testcase);
+
 
 #endif

@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
                 case TEST:
                 {
                     IO io;
+                    init_io(&io);
 
                     translate_file(argv[2], &io);
                     break;

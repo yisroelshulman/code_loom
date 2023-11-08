@@ -24,5 +24,8 @@ TranslateResult translate_file(const char* path, IO* io);
 // all the tokens of the special use language (domain specific)
 
 void print_token(Token* token);
+void print_io(IO *io);
+void print_case(TestCase *testcase);
+void print_input(Stream *stream);
 
 #endif

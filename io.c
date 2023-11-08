@@ -1,4 +1,5 @@
 #include <stdlib.h>
+// #include <stdbool.h>
 
 #include "io.h"
 
@@ -13,7 +14,7 @@ size_t write_stream(Stream *stream, const Token token)
 {
     if (stream->capacity < stream->length + token.length + 2) // leading space and nul terminator
     {
-        stream->capacity = stream->capacity * ((stream->length + token.length + 2) / 1028 + 1);
+        stream->capacity = (stream->capacity < 1024) ? 1024 : stream->capacity * ((stream->length + token.length + 2) / 1024 + 1);
         stream->stream = realloc(stream->stream, sizeof(char) * stream->capacity);
         if (stream->stream == NULL) return 0;
     }
@@ -23,13 +24,36 @@ size_t write_stream(Stream *stream, const Token token)
 
     for (int i = 0; i < token.length; i++)
     {
-        stream->stream[stream->length + i] = token.start[i];
+        stream->stream[stream->length] = token.start[i];
         stream->length++;
     }
-    stream->stream[stream->length] = '\0';
 
     return token.length + 2;
 }
 
-void init_io(IO *io);
-void free_io(IO *io);
+void init_io(IO *io)
+{
+    io->capacity = 0;
+    io->numtestcases = 0;
+    io->testcases = NULL;
+}
+
+void free_io(IO *io)
+{
+    
+    init_io(io);
+}
+
+bool add_test_case(IO* io, const TestCase* testcase)
+{
+    if (io->capacity < io->numtestcases + 1)
+    {
+        io->capacity = (io->capacity < 8) ? 8 : io->capacity * 2;
+        io->testcases = realloc(io->testcases, sizeof(TestCase) * io->capacity);
+        if (io->testcases == NULL) return false;
+    }
+
+    io->testcases[io->numtestcases] = *testcase;
+    io->numtestcases++;
+    return true;
+}
