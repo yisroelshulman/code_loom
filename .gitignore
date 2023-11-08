@@ -56,3 +56,4 @@ dkms.conf
 *.java
 *.class
 out.txt
+error.txt
