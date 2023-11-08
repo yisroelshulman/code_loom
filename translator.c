@@ -4,8 +4,6 @@
 #include <stdio.h>
 
 #include "translator.h"
-//#include "scanner.h"
-//#include "io.h"
 
 typedef struct
 {
@@ -94,6 +92,7 @@ static void synchronize()
             default:
                 break;
         }
+        advance();
     }
 }
 
@@ -130,14 +129,14 @@ static void input()
     {
         consume(TOKEN_LEFT_BRACKET, "Expected '[' to start a list.\n");
         while (match(datatype) && add_to_stream(&parser.testcase->input));
-        if (&parser.testcase->input.length == 0) error(&parser.current, "Expected at least one list input.\n");
+        if (parser.testcase->input.length == 0) error(&parser.current, "Expected at least one list input.\n");
         consume(TOKEN_RIGHT_BRACKET, "Expected ']' to end the list.\n");
     }
     else
     {
         if (!match(datatype) || !add_to_stream(&parser.testcase->input))
         {
-            error(&parser.current, "Expected at least one list input.\n");
+            error(&parser.current, "Expected at least one input.\n");
         }
     }
     consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the input.\n");
@@ -152,9 +151,9 @@ static void output()
 
     if (!match(datatype) || !add_to_stream(&parser.testcase->output))
     {
-        error(&parser.current, "Expected at least one list input.\n");
-    } 
-    consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the input.\n");
+        error(&parser.current, "Expected at least one output.\n");
+    }
+    consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the output.\n");
 }
 
 static void block()
@@ -181,6 +180,7 @@ static void test_case()
 
     if (parser.isaddable) add_test_case(translatingio, parser.testcase);
 
+    
     if (parser.panicmode) synchronize();
     return;
 }
@@ -324,7 +324,7 @@ void print_case(TestCase* testcase)
 {
     printf("is test case? %d\n", testcase->ischeckcase);
     print_input(&testcase->input);
-    print_input(&testcase->output);
+    print_output(&testcase->output);
 }
 
 void print_io(IO* io)

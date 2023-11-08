@@ -10,10 +10,10 @@ check {
 # test case 2
 {
     input (
-        num: list [ 7 11 31 1 101]
+        num: list [ ]
     )
     output (
-        num: 307
+        num: 10
     )
 }
 # test case 3
