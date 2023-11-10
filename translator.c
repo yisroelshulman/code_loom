@@ -1,10 +1,18 @@
 
 #include <stdbool.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "translator.h"
 
+// The parser parses the .sul file so it can be translated into test cases and stored in the io
+// it keeps track of the current scanned token and the previous scanned token. Additionally whether
+// or not there were any errors so the user knows that not all test cases were translated
+// The panicmode is set to let the translator know that there was an error while parsing in a block
+// and the translator needs to synchronize and advance to the next block so it can continue
+// translating.
+// the input and output are stored in the parsers testcase before being added to the translating io
+// isaddable resets with every new testcase to make sure each block can be translated
 typedef struct
 {
     Token current;
@@ -15,16 +23,19 @@ typedef struct
     bool isaddable;
 } Parser;
 
-
+// the parser and io that is used during the translation
 Parser parser;
 IO* translatingio;
 
-
+// error handles the errors that occur during the translation of the .sul file and reports the line
+// in the .sul file where the error is and an accompanying message on the error
+// if the translator is in panicmode no reporting is done so we can avoid cascading errors
+// when an error occurs panicmode is set to true and isaddable is set to false and haderror is set
+// to true
 static void error(Token* token, const char* message)
 {
     if (parser.panicmode) return;
     parser.panicmode = true;
-
     parser.isaddable = false;
 
     fprintf(stderr, "[line %d] Error", token->line);
@@ -42,6 +53,9 @@ static void error(Token* token, const char* message)
     parser.haderror = true;
 }
 
+
+// the advance function moves the parser ahead to the next token ignoring comments
+// this is where syntax errors are reported
 static void advance()
 {
     parser.previous = parser.current;
@@ -54,11 +68,13 @@ static void advance()
     }
 }
 
+// checks if the the token is the correct token type
 static bool check(TokenType type)
 {
     return parser.current.type == type;
 }
 
+// match advances the parser if the token is the correct type
 static bool match(TokenType type)
 {
     if (!check(type)) return false;
@@ -66,6 +82,8 @@ static bool match(TokenType type)
     return true;
 }
 
+// consume advances the parser if the token matches otherwise an error is created with the message
+// passed as a parameter
 static void consume(TokenType type, const char* message)
 {
     if (parser.current.type == type)
@@ -76,6 +94,9 @@ static void consume(TokenType type, const char* message)
     error(&parser.current, message);
 }
 
+// synchronize advances the scanner until the next block so we can continue translating
+// it resets panicmode to false and scans until it reaches the end of a block, the start of a new
+// block or the end of the file
 static void synchronize()
 {
     parser.panicmode = false;
@@ -88,7 +109,6 @@ static void synchronize()
             case TOKEN_LEFT_BRACE:
             case TOKEN_CHECK:
                 return;
-
             default:
                 break;
         }
@@ -96,6 +116,7 @@ static void synchronize()
     }
 }
 
+// helper method for the input and output functions to get the type of data for the input and output
 static TokenType get_data_type()
 {
     switch (parser.current.type)
@@ -108,6 +129,8 @@ static TokenType get_data_type()
     return TOKEN_NONE;
 }
 
+// adds the contents of the current token to the stream that was passed as an argument
+// if an error ocurred during the writing an error is raised
 static bool add_to_stream(Stream* stream)
 {
     if (write_stream(stream, parser.previous) == 0)
@@ -118,11 +141,12 @@ static bool add_to_stream(Stream* stream)
     return true;
 }
 
+// parses the test case input and adds them to the input stream
+// inputs can be a lists or individual items
 static void input()
 {
     TokenType datatype = get_data_type();
     advance();
-
     consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
 
     if (match(TOKEN_LIST))
@@ -142,11 +166,11 @@ static void input()
     consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the input.\n");
 }
 
+// parses the testcase output and adds it to the output stream
 static void output()
 {
     TokenType datatype = get_data_type();
     advance();
-
     consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
 
     if (!match(datatype) || !add_to_stream(&parser.testcase->output))
@@ -156,6 +180,7 @@ static void output()
     consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the output.\n");
 }
 
+// parses a testcase block and splits it into the input and the output
 static void block()
 {
     consume(TOKEN_INPUT, "Expected 'input' at the start of a block.\n");
@@ -167,6 +192,8 @@ static void block()
     consume(TOKEN_RIGHT_BRACE, "Expected '}' to end a test case.\n");
 }
 
+// parses a testcase and if no error occurred during the translation the test case is added to the
+// io so it can be used when running the program
 static void test_case()
 {
     TestCase testcase;
@@ -179,42 +206,33 @@ static void test_case()
     block();
 
     if (parser.isaddable) add_test_case(translatingio, parser.testcase);
-
-    
     if (parser.panicmode) synchronize();
     return;
 }
 
-
-static bool translate(const char* source, IO* io)
+// translates the source into the io's test cases
+// returns true or if there were no errors and false if there were
+static bool translating(const char* source, IO* io)
 {
     init_scanner(source);
-
     translatingio = io;
-
     parser.haderror = false;
     parser.panicmode = false;
-
     advance();
 
     while (!match(TOKEN_EOF))
     {
         test_case();
-        // sdd
-        // print_token(&parser.current);
-        // advance();
     }
-
-    print_io(translatingio); // remove
-
-    print_token(&parser.current); // remove
-
     return !parser.haderror;
 }
 
+// converts the file found at path into a char* buffer so the translating can begin
+// the new buffer is always nul terminated which signals the end of the file
+// if an error occurs during the this process the function returns NULL otherwise a pointer to tht
+// new buffer is returned
 static char* read_file(const char* path)
 {
-
     FILE* file = fopen(path, "rb");
     if (file == NULL)
     {
@@ -244,15 +262,21 @@ static char* read_file(const char* path)
     return buffer;
 }
 
-TranslateResult translate_file(const char* path, IO* io)
+// takes a path to a .sul file and an io and translates the .sul file into test cases and adds them
+// to the io so the the test cases can be run on execution
+TranslateResult translate(const char* path, IO* io)
 {
     char* source = read_file(path);
     if (source == NULL)
     {
         return READ_ERROR;
     }
-    bool result = translate(source, io);
+
+    bool result = translating(source, io);
     free(source);
+
+    // =====================================================================================================================================================
+    print_io(translatingio); // remove
 
     if (!result)
     {
@@ -262,7 +286,7 @@ TranslateResult translate_file(const char* path, IO* io)
 }
 
 
-// =================================================================================================
+// =========================================================================================================================================================
 // to remove
 // =================================================================================================
 

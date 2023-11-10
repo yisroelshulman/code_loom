@@ -1,7 +1,7 @@
 #ifndef AG_SUL_SCANNER_H
 #define AG_SUL_SCANNER_H
 
-// all the tokens of the special use language (domain specific)
+// TokenType is all the types of tokens that are recognized by the SUL language
 typedef enum
 {
     // symbols

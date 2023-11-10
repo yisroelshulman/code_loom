@@ -14,6 +14,7 @@ size_t write_stream(Stream *stream, const Token token)
 {
     if (stream->capacity < stream->length + token.length + 2) // leading space and nul terminator
     {
+        // fix the buffer overflow bug here when token.length > 1024 and stream->capacity < 1024
         stream->capacity = (stream->capacity < 1024) ? 1024 : stream->capacity * ((stream->length + token.length + 2) / 1024 + 1);
         stream->stream = realloc(stream->stream, sizeof(char) * stream->capacity);
         if (stream->stream == NULL) return 0;

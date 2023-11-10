@@ -8,7 +8,7 @@ all:
 
 
 
-.PHONY : clean
+.PHONY : clean all
 
 clean:
 	-rm a.out

@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
                     IO io;
                     init_io(&io);
 
-                    translate_file(argv[2], &io);
+                    translate(argv[2], &io);
                     break;
                 }
                 default:

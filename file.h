@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#define MAX_FILE_NAME_LEN 1028
+#define MAX_FILE_NAME_LEN 1024
 
 // Language is the list of languages the program can compile
 // by default the language will be NONE
