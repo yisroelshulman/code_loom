@@ -68,34 +68,6 @@ bool init_file(File *file, const char* source)
     return false; // extention not recognized
 }
 
-// takes a File and runs the proper compile command for that language
-// compilation errors are redirected to a default file to be reported to the user
-// returns true if the source code was compiled
-// returns false if the file didn't compile
-bool compile_file(File *file)
-{
-    char compilecommand[MAX_FILE_NAME_LEN + 30]; // reconsider position
-    char* errorredirect = "2>error.txt"; // the file where compilation errors are recorded
-
-    switch (file->language)
-    {
-        case JAVA:
-        {
-            snprintf(compilecommand, sizeof(compilecommand), "javac %s.java %s", file->absolutefilepath, errorredirect);
-            int result = system(compilecommand);
-            if (result == 0)
-            {
-                file->compiled = true;
-                return true;
-            }
-            break;
-        }
-        case NONE:
-            fprintf(stderr, "Unrecognized file type.\n");
-    }
-    return false; // did not compile
-}
-
 // to be removed
 // =================================================================================================
 // =================================================================================================

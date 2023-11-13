@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
+#include "crx.h"
 #include "file.h"
 #include "io.h"
 #include "translator.h"
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
                     {
                         print_file(&sourcecode);
                         printf("compilable\n");
-                        compile_file(&sourcecode);
+                        compile(&sourcecode);
                     }
                     else
                     {

@@ -1,5 +1,5 @@
-#ifndef IO_H
-#define IO_H
+#ifndef AG_IO_H
+#define AG_IO_H
 
 #include <stdbool.h>
 #include <stddef.h>

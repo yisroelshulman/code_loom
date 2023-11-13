@@ -60,21 +60,6 @@ typedef struct
  */
 bool init_file(File *file, const char* source);
 
-/*
- * The function compile_file compiles the source code so it can then be run
- * Any messages and stack traces the compiler reports will be logged in a local file "error.txt"
- *
- * @param File* file
- *      the file struct that contains the meta data so the source code can be compiled
- *
- * @returns
- *      true:   if the source code compiled
- *      false:  if the source code did not compile
- */
-bool compile_file(File* file);
-
-
-bool run_file(File* file);
 
 // testing functions to be removed
 // =================================================================================================
