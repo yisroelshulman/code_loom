@@ -58,14 +58,23 @@ typedef struct
  *      true:   if the source code is a valid file type and can be recognized by the compiler
  *      false:  if the source code is not a valid file type
  */
-bool init_file(File *file, const char* source);
+bool init_file(File* file, const char* source);
 
 /*
- * 
+ * The function read_file copies a file into a buffer and nul terminates it to signal the end of the
+ * file. The function does not modify the source file in any way.
  *
+ * @param const char* path
+ *      the path to the file and the file name that is used to open the file
+ *
+ * @returns
+ *      char* buffer:       the nul terminated buffer containing the files content
+ *      NULL:               if there were any errors in creating, reading or copying the file into
+ *                          the buffer
  */
 char* read_file(const char* path);
 
+// =================================================================================================
 // testing functions to be removed
 // =================================================================================================
 void print_file(File* file);
