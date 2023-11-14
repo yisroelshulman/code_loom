@@ -28,5 +28,31 @@ CRXResult compile(File *file)
     case NONE:
         fprintf(stderr, "Unrecognized file type.\n");
     }
-    return COMPILE_ERROR; // did not compile
+    return COMPILE_ERROR;
+}
+
+CRXResult run(File *file, const IO io)
+{
+    char* tempout = "> temp.txt";
+    char* errorout = "2> error.txt";
+    switch (file->language)
+    {
+        case JAVA:
+            for (int i = 0; i < io.numtestcases; i++)
+            {
+                char runcommand[MAX_FILE_NAME_LEN + io.testcases[i].input.length + 20];
+                snprintf(runcommand, sizeof(runcommand), "java %s %s %s %s", file->absolutefilepath, io.testcases[i].input.stream, tempout,  errorout);
+                printf("%s\n", runcommand);
+                int result = system(runcommand);
+                if (result == 0)
+                {
+                    system("rm error.txt");
+                    return RUN_OK;
+                }
+            }
+        default:
+            break;
+    }
+    system("rm temp.txt");
+    return RUN_ERROR;
 }

@@ -2,6 +2,7 @@
 #define AG_CRX_H
 
 #include "file.h"
+#include "io.h"
 
 typedef enum
 {
@@ -24,6 +25,6 @@ typedef enum
 CRXResult compile(File* file);
 
 
-CRXResult run(File* file);
+CRXResult run(File* file, const IO io);
 
 #endif

@@ -37,4 +37,5 @@ clean:
 	-rm -f a.out
 	-rm -f *.class
 	-rm -f error.txt
+	-rm -f temp.txt
 #-rm -r $(OBJ) $(BIN)

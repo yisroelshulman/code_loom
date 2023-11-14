@@ -28,6 +28,8 @@ size_t write_stream(Stream *stream, const Token token)
         stream->length++;
     }
 
+    stream->stream[stream->length] = '\0';
+
     return token.length + 2;
 }
 

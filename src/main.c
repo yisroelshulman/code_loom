@@ -19,6 +19,22 @@ typedef enum
 OP get_op(char* op);
 OP match_op(char* op, int len, const char *rest, OP type);
 
+static void consume()
+{
+    char c = getchar();
+    while (c != '\n')
+        c = getchar();
+    return;
+}
+
+static void wait()
+{
+    char c;
+    fgets(&c, 2, stdin);
+    consume();
+    printf("char = %c\n", c);
+}
+
 int main(int argc, char *argv[])
 {
 
@@ -51,6 +67,14 @@ int main(int argc, char *argv[])
                         print_file(&sourcecode);
                         printf("compilable\n");
                         compile(&sourcecode);
+                        IO io;
+                        init_io(&io);
+
+                        translate("test.sul", &io);
+
+                        run(&sourcecode, io);
+                        wait();
+                        wait();
                     }
                     else
                     {
