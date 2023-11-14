@@ -68,8 +68,42 @@ bool init_file(File *file, const char* source)
     return false; // extention not recognized
 }
 
-// to be removed
+// converts the file found at path into a char* buffer. The new buffer is always nul terminated
+// which signals the end of the file. If an error occurs during this process the function returns
+// NULL otherwise a pointer to the new buffer is returned
+char* read_file(const char* path)
+{
+    FILE* file = fopen(path, "rb");
+    if (file == NULL)
+    {
+        fprintf(stderr, "Could not open file \"%s\"\n.", path);
+        return NULL;
+    }
+
+    fseek(file, 0L, SEEK_END);
+    size_t filesize = ftell(file);
+    rewind(file);
+
+    char* buffer = (char*)malloc(filesize + 1);
+    if (buffer == NULL)
+    {
+        fprintf(stderr, "Not enough memory to read \"%s\".\n", path);
+    }
+
+    size_t bytesread = fread(buffer, sizeof(char), filesize, file);
+    if (bytesread < filesize)
+    {
+        fprintf(stderr, "Could not read file \"%s\".\n", path);
+        return NULL;
+    }
+
+    fclose(file);
+    buffer[bytesread] = '\0';
+    return buffer;
+}
+
 // =================================================================================================
+// to be removed
 // =================================================================================================
 
 static void print_lang(File* file)

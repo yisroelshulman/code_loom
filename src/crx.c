@@ -9,18 +9,18 @@
 CRXResult compile(File *file)
 {
     char compilecommand[MAX_FILE_NAME_LEN + 30]; // reconsider position
-    char *errorredirect = "2>error.txt";         // the file where compilation errors are recorded
+    char* errorfile = "2> error.txt";         // the file where compilation errors are recorded
 
     switch (file->language)
     {
     case JAVA:
     {
-        snprintf(compilecommand, sizeof(compilecommand), "javac %s.java %s", file->absolutefilepath, errorredirect);
+        snprintf(compilecommand, sizeof(compilecommand), "javac %s.java %s", file->absolutefilepath, errorfile);
         int result = system(compilecommand);
         if (result == 0)
         {
             file->compiled = true;
-            system("rm error.txt");
+            system("rm -f error.txt");
             return COMPILE_OK;
         }
         break;
@@ -33,26 +33,36 @@ CRXResult compile(File *file)
 
 CRXResult run(File *file, const IO io)
 {
-    char* tempout = "> temp.txt";
-    char* errorout = "2> error.txt";
+    char* outfile = "> temp.txt";
+    char* errorfile = "2> error.txt";
     switch (file->language)
     {
         case JAVA:
             for (int i = 0; i < io.numtestcases; i++)
             {
                 char runcommand[MAX_FILE_NAME_LEN + io.testcases[i].input.length + 20];
-                snprintf(runcommand, sizeof(runcommand), "java %s %s %s %s", file->absolutefilepath, io.testcases[i].input.stream, tempout,  errorout);
+                snprintf(runcommand, sizeof(runcommand), "java %s %s %s %s", file->absolutefilepath, io.testcases[i].input.stream, outfile,  errorfile);
                 printf("%s\n", runcommand);
                 int result = system(runcommand);
                 if (result == 0)
                 {
-                    system("rm error.txt");
-                    return RUN_OK;
+                    system("rm -f error.txt");
+                    char* result = read_file("temp.txt");
+                    if (result == NULL) {
+                        printf("nothing\n");
+                    }
+                    else 
+                    {
+                        printf("\nout start:\n%s\n", result);
+                        printf("out end:\n");
+                    }
+
                 }
             }
-        default:
-            break;
+            return RUN_OK;
+        case NONE:
+            fprintf(stderr, "Not an executable file.\n");
     }
-    system("rm temp.txt");
+    system("rm -f temp.txt");
     return RUN_ERROR;
 }

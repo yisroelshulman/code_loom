@@ -37,6 +37,8 @@ static void wait()
 
 int main(int argc, char *argv[])
 {
+    bool flag = true;
+    printf("%s\n", flag ? "true" : "false");
 
     switch (argc)
     {
@@ -70,11 +72,11 @@ int main(int argc, char *argv[])
                         IO io;
                         init_io(&io);
 
-                        translate("test.sul", &io);
+                        char* source = read_file("test.sul");
+                        translate(source, &io);
+                        free(source);
 
                         run(&sourcecode, io);
-                        wait();
-                        wait();
                     }
                     else
                     {
@@ -95,7 +97,10 @@ int main(int argc, char *argv[])
                     IO io;
                     init_io(&io);
 
-                    translate(argv[2], &io);
+                    char* source = read_file(argv[2]);
+                    translate(source, &io);
+                    free(source);
+
                     break;
                 }
                 default:

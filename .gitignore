@@ -55,5 +55,4 @@ dkms.conf
 ~$log.xlsx
 *.java
 *.class
-out.txt
-error.txt
+*.txt

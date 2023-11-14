@@ -1,0 +1,7 @@
+# empty string
+# string of len 1
+# string of len 2
+# string of len > 2 where len is odd
+# string of len > 2 where len is even
+# string with special characters
+# 3 non palindromes

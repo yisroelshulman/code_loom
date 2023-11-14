@@ -35,7 +35,7 @@ typedef enum
  *      READ_ERROR:         if the .sul file is not found or there was an error reading the file
  *      TRANSLATION_ERROR:  if an error occurred during the translation process
  */
-TranslateResult translate(const char* path, IO* io);
+TranslateResult translate(const char* source, IO* io);
 
  // ==========================================================================================================================================================
 // temp functions to test to remove

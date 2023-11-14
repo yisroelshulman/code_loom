@@ -60,6 +60,11 @@ typedef struct
  */
 bool init_file(File *file, const char* source);
 
+/*
+ * 
+ *
+ */
+char* read_file(const char* path);
 
 // testing functions to be removed
 // =================================================================================================

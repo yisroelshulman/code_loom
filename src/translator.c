@@ -227,53 +227,17 @@ static bool translating(const char* source, IO* io)
     return !parser.haderror;
 }
 
-// converts the file found at path into a char* buffer so the translating can begin
-// the new buffer is always nul terminated which signals the end of the file
-// if an error occurs during the this process the function returns NULL otherwise a pointer to tht
-// new buffer is returned
-static char* read_file(const char* path)
-{
-    FILE* file = fopen(path, "rb");
-    if (file == NULL)
-    {
-        fprintf(stderr, "Could not open file \"%s\"\n", path);
-        return NULL;
-    }
-
-    fseek(file, 0L, SEEK_END);
-    size_t filesize = ftell(file);
-    rewind(file);
-
-    char* buffer = (char*)malloc(filesize + 1);
-    if (buffer == NULL)
-    {
-        fprintf(stderr, "Not enough memory to read \"%s\"\n", path);
-        return NULL;
-    }
-
-    size_t bytesread = fread(buffer, sizeof(char), filesize, file);
-    if (bytesread < filesize)
-    {
-        fprintf(stderr, "Could not read file \"%s\"\n", path);
-        return NULL;
-    }
-
-    buffer[bytesread] = '\0'; // nul terminate
-    return buffer;
-}
-
 // takes a path to a .sul file and an io and translates the .sul file into test cases and adds them
 // to the io so the the test cases can be run on execution
-TranslateResult translate(const char* path, IO* io)
+TranslateResult translate(const char* source, IO* io)
 {
-    char* source = read_file(path);
     if (source == NULL)
     {
+        fprintf(stderr, "Invalid source file\n");
         return READ_ERROR;
     }
 
     bool result = translating(source, io);
-    free(source);
 
     // =====================================================================================================================================================
     print_io(translatingio); // remove
