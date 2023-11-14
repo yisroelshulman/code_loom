@@ -317,10 +317,11 @@ void print_case(TestCase* testcase)
 
 void print_io(IO* io)
 {
-    printf("cap = %d, count = %d\n", io->capacity, io->numtestcases);
+    printf("cap = %d, count = %d\n\n", io->capacity, io->numtestcases);
     for (int i = 0; i < io->numtestcases; i ++)
     {
         printf("test case %d:\n------------------\n", i);
         print_case(&io->testcases[i]);
+        printf("\n");
     }
 }

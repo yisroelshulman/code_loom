@@ -1,7 +1,97 @@
+# to test a program to see if it correctly generates a palindrome we need to evaluate what it means
+# to be a palindrome and build test cases that include all the possible forms.
+# palindromes are words or phrases that when ignoring case, whitespace and special characters read 
+# the same backwards and forwards
+
 # empty string
+{
+    input (
+        str: ""
+    )
+    output (
+        bool: true
+    )
+}
+
 # string of len 1
+{
+    input (
+        str: "I"
+    )
+    output (
+        bool: true
+    )
+}
+
 # string of len 2
+{
+    input (
+        str: "Aa"
+    )
+    output (
+        bool: true
+    )
+}
+
 # string of len > 2 where len is odd
+{
+    input (
+        str: "Racecar"
+    )
+    output (
+        bool: true
+    )
+}
+
 # string of len > 2 where len is even
+{
+    input (
+        str: "tattarrattat"
+    )
+    output (
+        bool: true
+    )
+}
+
 # string with special characters
+{
+    input (
+        str: "Mr. Owl ate my metal worm."
+    )
+    output (
+        bool: true
+    )
+}
+
+# ==================================================================
 # 3 non palindromes
+
+# len is even
+{
+    input (
+        str: "hello world"
+    )
+    output (
+        bool: false
+    )
+}
+
+# len is odd
+{
+    input (
+        str: "I like to code"
+    )
+    output (
+        bool: false
+    )
+}
+
+# one word
+{
+    input (
+        str: "palindrome"
+    )
+    output (
+        bool: false
+    )
+}
