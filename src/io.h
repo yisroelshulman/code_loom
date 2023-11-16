@@ -2,7 +2,6 @@
 #define AG_IO_H
 
 #include <stdbool.h>
-#include <stddef.h>
 
 #include "scanner.h"
 

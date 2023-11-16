@@ -26,3 +26,6 @@ The syntax highlighter uses the following breakdown to differentiate the highlig
 ## Installing the extension
 
 * To start using your extension with Visual Studio Code copy it into the `<user home>/.vscode/extensions` folder and restart Code.
+
+
+`Note:` This syntax highlighter extension was created by the `yo generate-code` command, and modified later to fit the specifications for the sul language.

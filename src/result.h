@@ -23,6 +23,8 @@ typedef struct
     Result* results;
 } TestResults;
 
-bool init_result(TestResults* testresults, int count);
+bool init_result(TestResults* testresults, const int count);
+
+void print_result(const TestResults* testresults);
 
 #endif

@@ -6,6 +6,7 @@
 #include "file.h"
 #include "io.h"
 #include "translator.h"
+#include "result.h"
 
 typedef enum
 {
@@ -76,7 +77,10 @@ int main(int argc, char *argv[])
                         translate(source, &io);
                         free(source);
 
+                        TestResults testresults;
+                        init_result(&testresults, io.numtestcases);
                         run(&sourcecode, io);
+                        print_result(&testresults);
                     }
                     else
                     {

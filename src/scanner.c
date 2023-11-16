@@ -204,17 +204,17 @@ Token scan_token()
 
     switch (c)
     {
-        case '(': return make_token(TOKEN_LEFT_PARENT);
-        case ')': return make_token(TOKEN_RIGHT_PARENT);
-        case '{': return make_token(TOKEN_LEFT_BRACE);
-        case '}': return make_token(TOKEN_RIGHT_BRACE);
-        case '[': return make_token(TOKEN_LEFT_BRACKET);
-        case ']': return make_token(TOKEN_RIGHT_BRACKET);
-        case ':': return make_token(TOKEN_COLON);
-        case '"': return string('"', TOKEN_DOUBLE_QUOTE);
-        case '\'': return string('\'', TOKEN_SINGLE_QUOTE);
-        case '#': return line_comment();
-        case '-': return number();
+        case '(':   return make_token(TOKEN_LEFT_PARENT);
+        case ')':   return make_token(TOKEN_RIGHT_PARENT);
+        case '{':   return make_token(TOKEN_LEFT_BRACE);
+        case '}':   return make_token(TOKEN_RIGHT_BRACE);
+        case '[':   return make_token(TOKEN_LEFT_BRACKET);
+        case ']':   return make_token(TOKEN_RIGHT_BRACKET);
+        case ':':   return make_token(TOKEN_COLON);
+        case '"':   return string('"', TOKEN_DOUBLE_QUOTE);
+        case '\'':  return string('\'', TOKEN_SINGLE_QUOTE);
+        case '#':   return line_comment();
+        case '-':   return number();
     }
     return error_token("Unexpected character.");
 }
