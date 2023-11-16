@@ -6,14 +6,14 @@ The sul-lang extension is a syntax highlighter for the sul language to make it e
 ## Features
 
 The syntax highlighter uses the following breakdown to differentiate the highlight coloring:
-* comment
-* check
-* input, output
-* num, str, bool
-* list
-* true, false,
-* string
-* number
+* `comment`
+* `check`
+* `input`, `output`
+* `num`, `str`, `bool`
+* `list`
+* `true`, `false`
+* `string`
+* `number`
 
 
 ## What's in the sul-lang.syntax.highlighter.extension folder

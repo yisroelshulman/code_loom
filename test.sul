@@ -21,10 +21,10 @@ check {
 # test case 3
 check {
     input (
-        num: list [ 5 30 1 98]
+        num: list [ -5 30 1 -98]
     )
     output (
-        num: 134
+        num: -72
     )
 }
 

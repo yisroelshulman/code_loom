@@ -45,6 +45,13 @@ static bool is_digit(char c)
     return (c >= '0' && c <= '9');
 }
 
+// returns true is the character is a '-' symbol
+// returns false otherwise
+static bool is_minus(char c)
+{
+    return c == '-';
+}
+
 // returns the character the scanner is currently looking at
 static char peek()
 {
@@ -145,6 +152,8 @@ static Token keyword()
 // numbers have the form [0..9]+.[0..9*]
 static Token number()
 {
+    if (is_minus(peek())) advance(); // negative
+
     while (is_digit(peek())) advance();
 
     if (peek() == '.')
@@ -205,6 +214,7 @@ Token scan_token()
         case '"': return string('"', TOKEN_DOUBLE_QUOTE);
         case '\'': return string('\'', TOKEN_SINGLE_QUOTE);
         case '#': return line_comment();
+        case '-': return number();
     }
     return error_token("Unexpected character.");
 }
