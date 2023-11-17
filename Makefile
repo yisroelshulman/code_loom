@@ -36,7 +36,5 @@ $(BIN):
 clean:
 	-rm -f a.out
 	-rm -f *.class
-	-rm -f error.txt
-	-rm -f temp.txt
-	-rm -f p.out.txt
+	-rm -f *.txt
 #-rm -r $(OBJ) $(BIN)

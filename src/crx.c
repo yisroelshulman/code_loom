@@ -91,6 +91,13 @@ CRXResult run(File *file, const IO io, TestResults* testresults)
                     }
                     testresults->results[i].status = compare(testresults->results[i].expected, testresults->results[i].received);
                 }
+                else
+                {
+                    // LOG ERROR AND REPORT
+                    // =============================================================================================================================================
+                    testresults->results[i].received = read_file("error.txt");
+                    testresults->results[i].status = FAIL;
+                }
             }
             return RUN_OK;
         case NONE:

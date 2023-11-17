@@ -28,10 +28,7 @@ typedef struct
 
 
 size_t write_stream(Stream* stream, const Token token);
-
 void init_test_case(TestCase* testcase);
-
-
 void init_io(IO* io);
 void free_io(IO* io);
 bool add_test_case(IO *io, const TestCase *testcase);
