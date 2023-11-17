@@ -3,6 +3,6 @@
 
 #include "result.h"
 
-Status compare(const char* expected, const char* received);
+Status compare(char* expected, char* received);
 
 #endif

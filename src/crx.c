@@ -34,29 +34,37 @@ CRXResult compile(File *file)
     return COMPILE_ERROR;
 }
 
-static bool is_string(const char* expected)
+
+static bool is_string(const char c)
 {
-    return expected[1] == '"';
+    return c  == '"';
 }
 
-static char* expected(char* expected)
+static char* substring(const char* string, int start, int end)
 {
-    if (is_string(expected))
+    char* result = (char*)malloc(end);
+    if (result == NULL)
     {
-        int length = 0;
-        while (expected[length] != '\0') length++;
-        char* result = (char*)malloc(length - 1);
-        for (int i = 1; i < length - 1; i++)
-        {
-            result[i - 1] = expected[i];
-        }
-        result[0] = ' ';
-        result[length - 1] = '\0';
-
-        return result;
+        fprintf(stderr, "Insoficient Memory.\n");
+        return NULL;
     }
-    return expected;
+    for (int i = 0; i < end; i++)
+    {
+        result[i] = string[start + i];
+    }
+    result[end] = '\0';
+    return result;
 }
+
+static char* expected(Stream output)
+{
+    if (is_string(output.stream[1]))
+    {
+        return substring(output.stream, 2, output.length - 3); // cutting space and quotes
+    }
+    return output.stream;
+}
+
 
 CRXResult run(File *file, const IO io, TestResults* testresults)
 {
@@ -71,7 +79,7 @@ CRXResult run(File *file, const IO io, TestResults* testresults)
                 snprintf(runcommand, sizeof(runcommand), "java %s %s %s %s", file->absolutefilepath, io.testcases[i].input.stream, outfile,  errorfile);
                 printf("%s\n", runcommand);
                 testresults->results[i].input = io.testcases[i].input.stream;
-                testresults->results[i].expected = expected(io.testcases[i].output.stream);
+                testresults->results[i].expected = expected(io.testcases[i].output);
                 int result = system(runcommand);
                 if (result == 0)
                 {
@@ -83,7 +91,6 @@ CRXResult run(File *file, const IO io, TestResults* testresults)
                     testresults->results[i].status = compare(testresults->results[i].expected, testresults->results[i].received);
                 }
             }
-            print_result(testresults);
             return RUN_OK;
         case NONE:
             fprintf(stderr, "Not an executable file.\n");
