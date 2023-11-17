@@ -22,11 +22,17 @@ static void print_case_result(Result result)
     switch (result.status)
     { 
         case PASS:
-            printf("result: pass");
+            printf("result: pass\n");
             return;
         case FAIL:
-            printf("Expected: %s\n", result.expected);
-            printf("Received: %s\n", result.received);
+            printf("Expected: ");
+            int i = 0;
+            while (result.expected[i] != '\0')
+            {
+                printf("%c", result.expected[i]);
+                i++;
+            }
+            printf("\nReceived: %s\n", result.received);
             return;
     }
 }

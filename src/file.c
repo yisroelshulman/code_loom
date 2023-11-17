@@ -124,7 +124,7 @@ static void print_lang(File* file)
 
 static void print_fname(File *file)
 {
-    for (int i = file->pathlen; i < file->filenamelen; i++)
+    for (int i = file->pathlen; i < file->filenamelen - 1; i++)
             printf("%c", file->absolutefilepath[i]);
     printf("\n");
 }

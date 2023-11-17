@@ -4,8 +4,8 @@ CFLAGS = -g -Wall
 BIN = bin
 SRC = src
 OBJ = obj
-FILES = src/main.c src/file.c src/scanner.c src/translator.c src/io.c src/crx.c src/result.c
-OBJECTS = obj/main.o obj/file.o obj/crx.o obj/scanner.o obj/translator.o obj/io.o obj/result.o
+FILES = src/main.c src/file.c src/scanner.c src/translator.c src/io.c src/crx.c src/result.c src/comparator.c
+OBJECTS = obj/main.o obj/file.o obj/crx.o obj/scanner.o obj/translator.o obj/io.o obj/result.o obj/comparator.o
 
 
 all:

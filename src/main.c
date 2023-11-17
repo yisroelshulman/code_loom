@@ -73,13 +73,13 @@ int main(int argc, char *argv[])
                         IO io;
                         init_io(&io);
 
-                        char* source = read_file("test.sul");
+                        char* source = read_file("test1.sul");
                         translate(source, &io);
                         free(source);
 
                         TestResults testresults;
                         init_result(&testresults, io.numtestcases);
-                        run(&sourcecode, io);
+                        run(&sourcecode, io, &testresults);
                         print_result(&testresults);
                     }
                     else
