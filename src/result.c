@@ -16,6 +16,23 @@ bool init_result(TestResults* testresults, const int count)
     return true;
 }
 
+void free_rslt(Result* result)
+{
+    free(result->input);
+    free(result->expected);
+    free(result->received);
+}
+
+void free_result(TestResults* testresults)
+{
+    for (int i = 0; i < testresults->count; i++)
+    {
+        free_rslt(&testresults->results[i]);
+    }
+    free(testresults->results);
+    testresults->count = 0;
+}
+
 static void print_case_result(Result result)
 {
     printf("On input: %s\n", result.input);

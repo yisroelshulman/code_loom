@@ -42,7 +42,7 @@ static bool is_string(const char c)
 
 static char* substring(const char* string, int start, int end)
 {
-    char* result = (char*)malloc(end);
+    char* result = (char*)malloc(end + 1);
     if (result == NULL)
     {
         fprintf(stderr, "Insoficient Memory.\n");
@@ -60,9 +60,9 @@ static char* expected(Stream output)
 {
     if (is_string(output.stream[1]))
     {
-        return substring(output.stream, 2, output.length - 3); // cutting space and quotes
+        return substring(output.stream, 2, output.length - 3); // removing leading space and surrounding quotes
     }
-    return output.stream;
+    return substring(output.stream, 1, output.length - 1); // removing leading space
 }
 
 
@@ -78,7 +78,7 @@ CRXResult run(File *file, const IO io, TestResults* testresults)
                 char runcommand[MAX_FILE_NAME_LEN + io.testcases[i].input.length + 20];
                 snprintf(runcommand, sizeof(runcommand), "java %s %s %s %s", file->absolutefilepath, io.testcases[i].input.stream, outfile,  errorfile);
                 printf("%s\n", runcommand);
-                testresults->results[i].input = io.testcases[i].input.stream;
+                testresults->results[i].input = substring(io.testcases[i].input.stream, 1, io.testcases[i].input.length - 1);
                 testresults->results[i].expected = expected(io.testcases[i].output);
                 int result = system(runcommand);
                 if (result == 0)

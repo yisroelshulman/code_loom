@@ -24,7 +24,8 @@ typedef struct
 } TestResults;
 
 bool init_result(TestResults* testresults, const int count);
+void free_result(TestResults *testresults);
 
-void print_result(const TestResults* testresults);
+void print_result(const TestResults *testresults);
 
 #endif

@@ -9,6 +9,12 @@ static void init_stream(Stream* stream)
     stream->capacity = 0;
 }
 
+void free_stream(Stream* stream)
+{
+    free(stream->stream);
+    init_stream(stream);
+}
+
 size_t write_stream(Stream *stream, const Token token)
 {
     if (stream->capacity < stream->length + token.length + 2) // leading space and nul terminator
@@ -40,6 +46,13 @@ void init_test_case(TestCase *testcase)
     init_stream(&testcase->output);
 }
 
+void free_test_case(TestCase* testcase)
+{
+    free_stream(&testcase->input);
+    free_stream(&testcase->output);
+    testcase = NULL;
+}
+
 void init_io(IO *io)
 {
     io->capacity = 0;
@@ -49,7 +62,11 @@ void init_io(IO *io)
 
 void free_io(IO *io)
 {
-    
+    for (int i = 0; i < io->numtestcases; i++)
+    {
+        free_test_case(&io->testcases[i]);
+    }
+    free(io->testcases);
     init_io(io);
 }
 
