@@ -38,4 +38,5 @@ clean:
 	-rm -f *.class
 	-rm -f error.txt
 	-rm -f temp.txt
+	-rm -f p.out.txt
 #-rm -r $(OBJ) $(BIN)

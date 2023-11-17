@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
                         IO io;
                         init_io(&io);
 
-                        char* source = read_file("test1.sul");
+                        char* source = read_file("program_tests/palindrome.sul");
                         translate(source, &io);
                         free(source);
 

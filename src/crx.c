@@ -85,6 +85,7 @@ CRXResult run(File *file, const IO io, TestResults* testresults)
                 {
                     system("rm -f error.txt");
                     testresults->results[i].received = read_file("temp.txt");
+                    system("rm -f temp.txt");
                     if (testresults->results[i].received == NULL) {
                         testresults->results[i].received = "NULL";
                     }
