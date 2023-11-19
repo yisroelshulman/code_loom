@@ -149,7 +149,7 @@ static Token keyword()
 }
 
 // scans and returns a token of the type number
-// numbers have the form [0..9]+.[0..9*]
+// numbers have the form [0..9]+(.[0..9*])?
 static Token number()
 {
     if (is_minus(peek())) advance(); // negative
