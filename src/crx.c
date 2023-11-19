@@ -34,12 +34,14 @@ CRXResult compile(File *file)
     return COMPILE_ERROR;
 }
 
-
+// returns true if c is a single or double quote
 static bool is_string(const char c)
 {
-    return c  == '"';
+    return c  == '"' || c == '\'';
 }
 
+// return a new string that is a substring from start to end of the original
+// the new string is always nul terminated
 static char* substring(const char* string, int start, int end)
 {
     char* result = (char*)malloc(end + 1);
@@ -56,6 +58,7 @@ static char* substring(const char* string, int start, int end)
     return result;
 }
 
+// returns the expected output by removing surrounding quotes and the leading space
 static char* expected(Stream output)
 {
     if (is_string(output.stream[1]))
@@ -65,8 +68,9 @@ static char* expected(Stream output)
     return substring(output.stream, 1, output.length - 1); // removing leading space
 }
 
-
-CRXResult run(File *file, const IO io, TestResults* testresults)
+// executes the program with each input of the io and stores the output and result status in the
+// test results
+CRXResult run(const File *file, const IO io, TestResults* testresults)
 {
     char* outfile = "> temp.txt";
     char* errorfile = "2> error.txt";
@@ -93,8 +97,6 @@ CRXResult run(File *file, const IO io, TestResults* testresults)
                 }
                 else
                 {
-                    // LOG ERROR AND REPORT
-                    // =============================================================================================================================================
                     testresults->results[i].received = read_file("error.txt");
                     testresults->results[i].status = FAIL;
                 }
@@ -103,6 +105,7 @@ CRXResult run(File *file, const IO io, TestResults* testresults)
         case NONE:
             fprintf(stderr, "Not an executable file.\n");
     }
+    system("rm -f temp.txt");
     system("rm -f temp.txt");
     return RUN_ERROR;
 }
