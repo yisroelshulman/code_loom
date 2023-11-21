@@ -4,7 +4,10 @@
 typedef enum
 {
     SELECTION,
-    RUN
+    RUN,
+    SUBMIT_PROMPT,
+    SUBMIT_MENU,
+    PAUSE
 } Menu;
 
 typedef enum
@@ -17,6 +20,7 @@ typedef enum
     SUBMIT,
     ADD_TEST_CASE,
     BACK,
+    REPEAT,
     INVALID
 } Selection;
 

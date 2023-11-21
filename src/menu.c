@@ -1,27 +1,61 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "menu.h"
 
-// the selection menu options that the user can choose from
-static void show_selection_menu()
+// the first line of the menu prompt
+static void first_line()
 {
     printf("Please select from the following options:\n\n");
+}
+
+// the last line of the menu prompt
+static void last_line()
+{
+    printf("\nto make a selection please enter the number associated with the selection.\n");
+}
+
+// the selection menu options that the user can choose from
+static void show_selection_menu()
+{ 
+    first_line();
     printf("\t1. help\n");
     printf("\t2. default problem\n");
     printf("\t3. problem list\n");
     printf("\t4. exit\n");
-    printf("\nto make a selection please enter the number associated with the selection.\n");
+    last_line();
 }
 
 // the run menu options that the user can choose from
 static void show_run_menu()
 {
-    printf("Please select from the following options:\n\n");
+    first_line();
     printf("\t1. check\n");
     printf("\t2. submit\n");
     printf("\t3. add test case\n");
     printf("\t4. back\n");
-    printf("\nto make a selection please enter the number associated with the selection.\n");
+    last_line();
+}
+
+// the submit prompt
+static void show_submit_prompt()
+{
+    printf("Please enter the file name [path/filename]: \n");
+}
+
+// the submit menu
+static void show_submit_menu()
+{
+    first_line();
+    printf("\t1. try again\n");
+    printf("\t2. back\n");
+    last_line();
+}
+
+// the prompt that pauses until enter is hit
+static void show_pause()
+{
+    printf("Hit enter or any key/s followed by enter to continue.\n");
 }
 
 // consumes the rest of stdin until the newline character
@@ -65,7 +99,7 @@ static Selection get_menu_selection()
     return INVALID; // unreachable
 }
 
-// extracts the run selection from the user input
+// extracts the run selection from the users input
 static Selection get_run_selection()
 {
     switch (to_int(read_selection()))
@@ -79,17 +113,49 @@ static Selection get_run_selection()
     return INVALID; // unreachable
 }
 
+// extracts the submit selection from the users input
+static Selection get_submit_selection()
+{
+    switch (to_int(read_selection()))
+    {
+        case 1:     return REPEAT;
+        case 2:     return BACK;
+        default:    return INVALID;
+    }
+    return INVALID; // unreachable
+}
+
+// clears the screen in linux based distros
+static void clear_screen()
+{
+    system("clear");
+}
+
 // the selection menu and handling of the selection
 Selection menu(Menu menu)
 {
     switch (menu)
     {
         case SELECTION:
+            clear_screen();
             show_selection_menu();
             return get_menu_selection();
         case RUN:
+            clear_screen();
             show_run_menu();
             return get_run_selection();
+        case SUBMIT_PROMPT:
+            clear_screen();
+            show_submit_prompt();
+            break;
+        case SUBMIT_MENU:
+            clear_screen();
+            show_submit_menu();
+            return get_submit_selection();
+        case PAUSE:
+            show_pause();
+            read_selection();
+            return INVALID;
     }
-    return INVALID; // unreachable
+    return INVALID;
 }
