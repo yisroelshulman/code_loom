@@ -61,17 +61,17 @@ static void submit()
         break;
     }
     compile(&sourcecode);
-
     TestResults testresults;
     init_result(&testresults, io.numtestcases);
     run(&sourcecode, io, &testresults);
     print_result(&testresults);
+    free_result(&testresults);
     menu(PAUSE);
 }
 
 // takes a string which contains the path to the source .sul file and translates it into test cases
 // then extracts the users run option to run the program and test it
-static void run_menu(char *sourcecode)
+static void run_controller(char *sourcecode)
 {
     init_io(&io);
     char *source = read_file(sourcecode);
@@ -120,7 +120,7 @@ void start()
             printf("help\n");
             return;
         case DEFAULT_PROBLEM:
-            run_menu(DEFAULT_FILE);
+            run_controller(DEFAULT_FILE);
             break;
         case PROBLEM_LIST:
             printf("problem list\n");

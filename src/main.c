@@ -33,16 +33,7 @@ int main(int argc, char *argv[])
             start();
             exit(0);
         case 2:
-            switch (get_op(argv[1]))
-            {
-                case HELP:
-                    printf("help\n");
-                    break;
-                default:
-                    printf("error\n");
-                    break;
-            }
-            break;
+            exit(1);
         case 3:
             switch (get_op(argv[1]))
             {
@@ -66,7 +57,7 @@ int main(int argc, char *argv[])
                         init_result(&testresults, io.numtestcases);
                         run(&sourcecode, io, &testresults);
                         print_result(&testresults);
-                        //free_result(&testresults);
+                        free_result(&testresults);
                         free_io(&io);
                     }
                     else

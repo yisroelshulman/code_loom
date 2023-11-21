@@ -31,7 +31,10 @@ $(BIN):
 	mkdir $@
 
 # non file/directory recipies
-.PHONY: clean all
+.PHONY: clean all memcheck
+
+memcheck:
+	valgrind -s --leak-check=full ./a.out 2>out.txt
 
 clean:
 	-rm -f a.out
