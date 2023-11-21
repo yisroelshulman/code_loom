@@ -46,7 +46,7 @@ typedef struct
 size_t write_stream(Stream* stream, const Token token);
 
 /*
- * The init_test_case functions initializes a test case to its default values.
+ * The init_test_case function initializes a test case to its default values.
  *
  * After a call to init_test_case the testcase will have the following values:
  * isCheckCase = false, input = {length = 0, capacity = 0, stream = NULL }, output = {length = 0,
@@ -56,6 +56,16 @@ size_t write_stream(Stream* stream, const Token token);
  *      the TestCase being initialized
  */
 void init_test_case(TestCase* testcase);
+
+/*
+ * The free_test_case function initializes frees the allocated memory to a TestCase
+ * 
+ * After a call to free_test_case the testcase = NULL
+ * 
+ * @param TestCase* testcase
+ *      the testcase who's memory is being deallocated
+ */
+void free_test_case(TestCase* testcase);
 
 /*
  * The init_io function initializes a io to its default values

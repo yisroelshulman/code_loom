@@ -206,7 +206,11 @@ static void test_case()
     block();
 
     if (parser.isaddable) add_test_case(translatingio, parser.testcase);
-    if (parser.panicmode) synchronize();
+    if (parser.panicmode)
+    {
+        synchronize();
+        free_test_case(&testcase);
+    }
     return;
 }
 

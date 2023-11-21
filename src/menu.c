@@ -1,6 +1,7 @@
-
 #include <stdio.h>
+#include <stdlib.h>
 
+#include "file.h"
 #include "io.h"
 #include "menu.h"
 #include "translator.h"
@@ -100,10 +101,13 @@ static Selection get_run_selection()
 
 // takes a string which contains the path to the source .sul file and translates it into test cases
 // then extracts the users run option to run the program and test it
-static void run_menu(char* source)
+static void run_menu(char* sourcecode)
 {
     init_io(&io);
+    char* source = read_file(sourcecode);
     translate(source, &io);
+    free(source);
+
     int loop = 1;
     while (loop)
     {
