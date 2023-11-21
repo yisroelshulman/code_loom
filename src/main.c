@@ -7,7 +7,7 @@
 #include "io.h"
 #include "translator.h"
 #include "result.h"
-#include "menu.h"
+#include "controller.h"
 
 typedef enum
 {
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     switch (argc)
     {
         case 1:
-            menu();
+            start();
             exit(0);
         case 2:
             switch (get_op(argv[1]))

@@ -1,27 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-#include "file.h"
-#include "io.h"
 #include "menu.h"
-#include "translator.h"
-
-#define DEFAULT_FILE "input.sul"
-
-typedef enum
-{
-    HELP,
-    DEFAULT_PROBLEM,
-    PROBLEM_LIST,
-    EXIT,
-    CHECK,
-    SUBMIT,
-    ADD_TEST_CASE,
-    BACK,
-    INVALID
-} Selection;
-
-IO io;
 
 // the selection menu options that the user can choose from
 static void show_selection_menu()
@@ -58,10 +37,11 @@ static void consume()
 // character even if its the newline character
 static char read_selection()
 {
-    char c[2];
+    char c[3];
     fgets(c, sizeof(c), stdin);
+    if (c[1] == '\n') return c[0]; // exactly one character was read
     if (!(c[0] == '\n')) consume();
-    return c[0];
+    return '0'; // 0 or too many characters were read
 }
 
 // converts an int stored as a char to an int
@@ -99,67 +79,17 @@ static Selection get_run_selection()
     return INVALID; // unreachable
 }
 
-// takes a string which contains the path to the source .sul file and translates it into test cases
-// then extracts the users run option to run the program and test it
-static void run_menu(char* sourcecode)
-{
-    init_io(&io);
-    char* source = read_file(sourcecode);
-    translate(source, &io);
-    free(source);
-
-    int loop = 1;
-    while (loop)
-    {
-        show_run_menu();
-        switch (get_run_selection())
-        {
-            case CHECK:
-                printf("check\n");
-                loop = 0;
-                break;
-            case SUBMIT:
-                printf("submit\n");
-                loop = 0;
-                break;
-            case ADD_TEST_CASE:
-                printf("add test case\n");
-                loop = 0;
-                break;
-            case BACK:
-                printf("back\n");
-                loop = 0;
-                break;
-            default:
-                printf("Invalid selection\n");
-        }
-    }
-    free_io(&io);
-    return;
-}
-
 // the selection menu and handling of the selection
-void menu()
+Selection menu(Menu menu)
 {
-    while (1)
+    switch (menu)
     {
-        show_selection_menu();
-        switch (get_menu_selection())
-        {
-            case HELP:
-                printf("help\n");
-                return;
-            case DEFAULT_PROBLEM:
-                run_menu(DEFAULT_FILE);
-                break;
-            case PROBLEM_LIST:
-                printf("problem list\n");
-                return;
-            case EXIT:
-                printf("exit\n");
-                return;
-            default:
-                printf("Invalid Selection\n");
-        }
+        case SELECTION:
+            show_selection_menu();
+            return get_menu_selection();
+        case RUN:
+            show_run_menu();
+            return get_run_selection();
     }
+    return INVALID; // unreachable
 }

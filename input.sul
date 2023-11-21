@@ -1,37 +1,59 @@
 # test case 1
 check {
     input (
-        num: list [ 5 10.3 30 1 98]
+        num: list [ 5 30 1 98]
     )
     output (
-        num: 5
+        num: 134
     )
 }
+
 # test case 2
 {
+    input (
+        num: list [ 0 ]
+    )
+    output (
+        num: 0
+    )
+}
+
+# test case 3
+check {
+    input (
+        num: list [ -5 30 1 -98]
+    )
+    output (
+        num: -72
+    )
+}
+
+# test case 4
+check {
+    input (
+        num: list [ -5 -30 -1 -98]
+    )
+    output (
+        num: -134
+    )
+}
+
+# test case 5
+check {
+    input (
+        num: list [ 0 0 0 0 ]
+    )
+    output (
+        num: 0
+    )
+}
+
+# test case 6
+check {
     input (
         num: list [ ]
     )
     output (
-        num: 10
-    )
-}
-# test case 3
-# type str
-check {
-    input (
-        str: "hello world!"
-    )
-    output (
-        str: 'hello world'
-    )
-}
-# test case 4
-{
-    input (
-        bool: true
-    )
-    output (
-        bool: false
+        num: 134
     )
 }
