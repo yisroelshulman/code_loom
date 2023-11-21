@@ -13,6 +13,12 @@ typedef enum
     RUN_ERROR
 } CRXResult;
 
+typedef enum
+{
+    CRX_TEST,
+    CRX_CHECK
+} RunType;
+
 /*
  * The function compile_file compiles the source code so it can then be run
  * Any messages and stack traces the compiler reports will be logged in a local file "error.txt"
@@ -43,6 +49,6 @@ CRXResult compile(File* file);
  *      RUN_OK:     if the program is of a recognized file type
  *      RUN_ERROR:  if the program is not a recognized file type
  */
-CRXResult run(const File* file, const IO io, TestResults* testresults);
+CRXResult run(const File* file, const IO io, TestResults* testresults, RunType type);
 
 #endif

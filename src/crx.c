@@ -70,7 +70,7 @@ static char* expected(Stream output)
 
 // executes the program with each input of the io and stores the output and result status in the
 // test results
-CRXResult run(const File *file, const IO io, TestResults* testresults)
+CRXResult run_test(const File *file, const IO io, TestResults* testresults)
 {
     char* outfile = "> temp.txt";
     char* errorfile = "2> error.txt";
@@ -107,5 +107,64 @@ CRXResult run(const File *file, const IO io, TestResults* testresults)
     }
     system("rm -f temp.txt");
     system("rm -f temp.txt");
+    return RUN_ERROR;
+}
+
+// executes the program with each check input of the io and stores the output and result status in
+// the test results
+CRXResult run_check(const File *file, const IO io, TestResults* testresults)
+{
+    char *outfile = "> temp.txt";
+    char *errorfile = "2> error.txt";
+    int checkcount = 0;
+    switch (file->language)
+    {
+    case JAVA:
+        for (int i = 0; i < io.numtestcases; i++)
+        {
+            if (!(io.testcases[i].ischeckcase)) continue;
+            char runcommand[MAX_FILE_NAME_LEN + io.testcases[i].input.length + 20];
+            snprintf(runcommand, sizeof(runcommand), "java %s %s %s %s", file->absolutefilepath, io.testcases[i].input.stream, outfile, errorfile);
+            printf("cmd: %s\n", runcommand);
+            testresults->results[checkcount].input = substring(io.testcases[i].input.stream, 1, io.testcases[i].input.length - 1);
+            testresults->results[checkcount].expected = expected(io.testcases[i].output);
+            int result = system(runcommand);
+            if (result == 0)
+            {
+                system("rm -f error.txt");
+                testresults->results[checkcount].received = read_file("temp.txt");
+                system("rm -f temp.txt");
+                if (testresults->results[checkcount].received == NULL)
+                {
+                    testresults->results[checkcount].received = "NULL";
+                }
+                testresults->results[checkcount].status = compare(testresults->results[checkcount].expected, testresults->results[checkcount].received);
+            }
+            else
+            {
+                testresults->results[checkcount].received = read_file("error.txt");
+                testresults->results[checkcount].status = FAIL;
+            }
+            checkcount++;
+        }
+        return RUN_OK;
+    case NONE:
+        fprintf(stderr, "Not an executable file.\n");
+    }
+    system("rm -f temp.txt");
+    system("rm -f temp.txt");
+    return RUN_ERROR;
+}
+
+// entry to the run for both checks and submits
+CRXResult run(const File *file, const IO io, TestResults*  testresults, RunType type)
+{
+    switch (type)
+    {
+        case CRX_TEST:
+            return run_test(file, io, testresults);
+        case CRX_CHECK:
+            return run_check(file, io, testresults);
+    }
     return RUN_ERROR;
 }

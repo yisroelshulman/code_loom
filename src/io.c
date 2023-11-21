@@ -64,6 +64,7 @@ void init_io(IO *io)
 {
     io->capacity = 0;
     io->numtestcases = 0;
+    io->numcheckcases = 0;
     io->testcases = NULL;
 }
 
@@ -87,7 +88,7 @@ bool add_test_case(IO* io, const TestCase* testcase)
         io->testcases = realloc(io->testcases, sizeof(TestCase) * io->capacity);
         if (io->testcases == NULL) return false;
     }
-
+    if (testcase->ischeckcase) io->numcheckcases++;
     io->testcases[io->numtestcases] = *testcase;
     io->numtestcases++;
     return true;

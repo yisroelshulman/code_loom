@@ -5,9 +5,10 @@ typedef enum
 {
     SELECTION,
     RUN,
-    SUBMIT_PROMPT,
-    SUBMIT_MENU,
-    PAUSE
+    FILE_NAME_PROMPT,
+    REPEAT_MENU,
+    PAUSE,
+    PROBLEM_LIST_MENU
 } Menu;
 
 typedef enum

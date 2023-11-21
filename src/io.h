@@ -26,6 +26,7 @@ typedef struct
 typedef struct
 {
     int numtestcases;
+    int numcheckcases;
     int capacity;
     TestCase* testcases;
 } IO;
@@ -71,7 +72,7 @@ void free_test_case(TestCase* testcase);
  * The init_io function initializes a io to its default values
  * 
  * After a call to init_io the IO will have the following values:
- * numtestcases = 0, capacity = 0, testcases = NULL
+ * numtestcases = 0, numcheckcases = 0, capacity = 0, testcases = NULL
  * 
  * @param IO* io
  *      the IO being initialized

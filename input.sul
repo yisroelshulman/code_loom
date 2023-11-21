@@ -19,7 +19,7 @@ check {
 }
 
 # test case 3
-check {
+{
     input (
         num: list [ -5 30 1 -98]
     )
@@ -49,7 +49,7 @@ check {
 }
 
 # test case 6
-check {
+{
     input (
         num: list [ ]
     )

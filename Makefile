@@ -15,6 +15,10 @@ all:
 obj/file.o: src/file.c | $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# creates the .o file for the menu.c file, if the obj directory is not there it creates it
+obj/menu.o: src/menu.c | $(OBJ)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 # creates the .o file for the scanner.c file, if the obj directory is not there it creates it
 obj/scanner.o: src/scanner.c | $(OBJ)
 	$(CC) $(CFLAGS) -c $< -o $@

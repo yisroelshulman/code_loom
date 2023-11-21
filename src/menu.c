@@ -38,13 +38,13 @@ static void show_run_menu()
 }
 
 // the submit prompt
-static void show_submit_prompt()
+static void show_filename_prompt()
 {
     printf("Please enter the file name [path/filename]: \n");
 }
 
 // the submit menu
-static void show_submit_menu()
+static void show_repeat_menu()
 {
     first_line();
     printf("\t1. try again\n");
@@ -144,17 +144,19 @@ Selection menu(Menu menu)
             clear_screen();
             show_run_menu();
             return get_run_selection();
-        case SUBMIT_PROMPT:
+        case FILE_NAME_PROMPT:
             clear_screen();
-            show_submit_prompt();
-            break;
-        case SUBMIT_MENU:
+            show_filename_prompt();
+            return INVALID;
+        case REPEAT_MENU:
             clear_screen();
-            show_submit_menu();
+            show_repeat_menu();
             return get_submit_selection();
         case PAUSE:
             show_pause();
             read_selection();
+            return INVALID;
+        default:
             return INVALID;
     }
     return INVALID;
