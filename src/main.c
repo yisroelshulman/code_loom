@@ -7,6 +7,7 @@
 #include "io.h"
 #include "translator.h"
 #include "result.h"
+#include "menu.h"
 
 typedef enum
 {
@@ -20,33 +21,17 @@ typedef enum
 OP get_op(char* op);
 OP match_op(char* op, int len, const char *rest, OP type);
 
-static void consume()
-{
-    char c = getchar();
-    while (c != '\n')
-        c = getchar();
-    return;
-}
-
-static void wait()
-{
-    char c;
-    fgets(&c, 2, stdin);
-    consume();
-    printf("char = %c\n", c);
-}
-
 int main(int argc, char *argv[])
 {
     bool flag = true;
     printf("%s\n", flag ? "true" : "false");
+    printf("flag = %d\n", flag);
 
     switch (argc)
     {
         case 1:
-            // error
-            printf("error no args\n");
-            exit(1);
+            menu();
+            exit(0);
         case 2:
             switch (get_op(argv[1]))
             {
