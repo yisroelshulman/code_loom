@@ -3,6 +3,7 @@
 
 #include "controller.h"
 #include "crx.h"
+#include "debug.h"
 #include "menu.h"
 #include "file.h"
 #include "io.h"

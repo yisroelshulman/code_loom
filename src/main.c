@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
             start();
             exit(0);
         case 2:
+            // start();
             exit(1);
         case 3:
             switch (get_op(argv[1]))

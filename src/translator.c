@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "translator.h"
+#include "debug.h"
 
 // The parser parses the .sul file so it can be translated into test cases and stored in the io
 // it keeps track of the current scanned token and the previous scanned token. Additionally whether
@@ -244,88 +245,14 @@ TranslateResult translate(const char* source, IO* io)
     bool result = translating(source, io);
 
     // =====================================================================================================================================================
-    print_io(translatingio); // remove
+    #ifdef DEBUG_MODE
+        printf("worked\n");
+        print_io(translatingio); // remove
+    #endif
 
     if (!result)
     {
         return TRANSLATION_ERROR;
     }
     return SUCCESS;
-}
-
-
-// =========================================================================================================================================================
-// to remove
-// =================================================================================================
-
-char *tokenasstring[] = {
-    // symbols
-    [TOKEN_LEFT_PARENT] = "left parent",
-    [TOKEN_RIGHT_PARENT] = "right parent",
-    [TOKEN_LEFT_BRACE] = "left brace",
-    [TOKEN_RIGHT_BRACE] = "right brace",
-    [TOKEN_LEFT_BRACKET] = "left bracket",
-    [TOKEN_RIGHT_BRACKET] = "right bracket",
-    [TOKEN_COLON] = "colon",
-    [TOKEN_DOUBLE_QUOTE] = "double quote",
-    [TOKEN_SINGLE_QUOTE] = "single quote",
-    [TOKEN_HASHTAG] = "hashtag",
-
-    // literals
-    [TOKEN_NUMBER] = "number",
-    [TOKEN_STRING] = "string",
-    [TOKEN_BOOLEAN] = "boolean",
-    [TOKEN_COMMENT] = "comment",
-
-    // keywords
-    [TOKEN_CHECK] = "check",
-    [TOKEN_INPUT] = "input",
-    [TOKEN_OUTPUT] = "output",
-    [TOKEN_LIST] = "list",
-    [TOKEN_TRUE] = "true",
-    [TOKEN_FALSE] = "false",
-
-    // keywords for literal type declarations
-    [TOKEN_BOOL] = "bool",
-    [TOKEN_NUM] = "num",
-    [TOKEN_STR] = "str",
-
-    // other
-    [TOKEN_ERROR] = "error",
-    [TOKEN_EOF] = "eof",
-
-    // not to be used while scanning
-    [TOKEN_NONE] = "none"};
-
-void print_token(Token* token)
-{
-    printf("%s\n", tokenasstring[token->type]);
-}
-
-void print_input(Stream *stream)
-{
-    printf("input: %s\n", stream->stream);
-}
-
-void print_output(Stream *stream)
-{
-    printf("output: %s\n", stream->stream);
-}
-
-void print_case(TestCase* testcase)
-{
-    printf("is test case? %d\n", testcase->ischeckcase);
-    print_input(&testcase->input);
-    print_output(&testcase->output);
-}
-
-void print_io(IO* io)
-{
-    printf("cap = %d, count = %d\n\n", io->capacity, io->numtestcases);
-    for (int i = 0; i < io->numtestcases; i ++)
-    {
-        printf("test case %d:\n------------------\n", i);
-        print_case(&io->testcases[i]);
-        printf("\n");
-    }
 }

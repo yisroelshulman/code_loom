@@ -125,10 +125,13 @@ static Selection get_submit_selection()
     return INVALID; // unreachable
 }
 
+
+// ==================================================================================================================================================================
+// remove the clear screen
 // clears the screen in linux based distros
 static void clear_screen()
 {
-    system("clear");
+    //system("clear");
 }
 
 // the selection menu and handling of the selection
