@@ -75,3 +75,8 @@ void print_token(Token *token)
 {
     printf("%s\n", tokenasstring[token->type]);
 }
+
+void print_run_command(char *command)
+{
+    printf("cmd: %s\n", command);
+}

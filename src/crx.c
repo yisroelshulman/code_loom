@@ -6,6 +6,7 @@
 
 #include "crx.h"
 #include "comparator.h"
+#include "debug.h"
 
 // takes a File and runs the proper compile command for that language
 // compilation errors are redirected to a default file to be reported to the user
@@ -81,7 +82,9 @@ CRXResult run_test(const File *file, const IO io, TestResults* testresults)
             {
                 char runcommand[MAX_FILE_NAME_LEN + io.testcases[i].input.length + 20];
                 snprintf(runcommand, sizeof(runcommand), "java %s %s %s %s", file->absolutefilepath, io.testcases[i].input.stream, outfile,  errorfile);
-                printf("%s\n", runcommand);
+                #ifdef DEBUG_MODE
+                    print_run_command(runcommand);
+                #endif
                 testresults->results[i].input = substring(io.testcases[i].input.stream, 1, io.testcases[i].input.length - 1);
                 testresults->results[i].expected = expected(io.testcases[i].output);
                 int result = system(runcommand);
@@ -125,7 +128,9 @@ CRXResult run_check(const File *file, const IO io, TestResults* testresults)
             if (!(io.testcases[i].ischeckcase)) continue;
             char runcommand[MAX_FILE_NAME_LEN + io.testcases[i].input.length + 20];
             snprintf(runcommand, sizeof(runcommand), "java %s %s %s %s", file->absolutefilepath, io.testcases[i].input.stream, outfile, errorfile);
-            printf("cmd: %s\n", runcommand);
+            #ifdef DEBUG_MODE
+                print_run_command(runcommand);
+            #endif
             testresults->results[checkcount].input = substring(io.testcases[i].input.stream, 1, io.testcases[i].input.length - 1);
             testresults->results[checkcount].expected = expected(io.testcases[i].output);
             int result = system(runcommand);
