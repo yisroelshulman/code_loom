@@ -26,7 +26,7 @@ void print_io(IO* io)
     printf("cap = %d, count = %d\n\n", io->capacity, io->numtestcases);
     for (int i = 0; i < io->numtestcases; i++)
     {
-        printf("test case %d:\n------------------\n", i);
+        printf("test case # %d:\n------------------\n", i + 1);
         print_case(&io->testcases[i]);
         printf("\n");
     }
@@ -66,6 +66,7 @@ char *tokenasstring[] = {
 
     // other
     [TOKEN_ERROR] = "error",
+    [TOKEN_KEYWORD_ERROR] = "keyword error",
     [TOKEN_EOF] = "eof",
 
     // not to be used while scanning

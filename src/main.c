@@ -50,16 +50,22 @@ int main(int argc, char *argv[])
                         IO io;
                         init_io(&io);
 
-                        char* source = read_file("program_tests/palindrome.sul");
+                        char* source = read_file("program_tests/sum_ntom.sul");
                         translate(source, &io);
                         free(source);
 
                         TestResults testresults;
                         init_result(&testresults, io.numtestcases);
-                        //run(&sourcecode, io, &testresults);
-                        //print_result(&testresults);
+
+
+                        run(&sourcecode, io, &testresults, CRX_TEST);
+
+                        output_result(&testresults, "result.txt");
                         free_result(&testresults);
                         free_io(&io);
+                        system("less result.txt");
+                        // log?
+                        system("rm -f result.txt");
                     }
                     else
                     {

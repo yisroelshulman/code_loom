@@ -3,6 +3,7 @@
 
 #include "scanner.h"
 
+
 // a token scanner that keeps a pointer to the start of the token and a pointer to the current
 // position in the text file. finally the line in the document where the token can be found for
 // better error reporting
@@ -117,7 +118,7 @@ static TokenType check_keyword(int start, int length, const char* rest, TokenTyp
 {
     if ((scanner.current - scanner.start == start + length) && (memcmp(scanner.start + start, rest, length) == 0)) return type;
 
-    return TOKEN_ERROR;
+    return TOKEN_KEYWORD_ERROR;
 }
 
 // tries to scan and return a keyword token if not a keyword token an error token is returned
@@ -144,7 +145,6 @@ static Token keyword()
 {
     while (is_alpha(peek())) advance();
     TokenType type = keyword_type();
-    if (type == TOKEN_ERROR) return error_token("Unexpected character.");
     return make_token(type);
 }
 

@@ -37,6 +37,7 @@ typedef enum
 
     // other
     TOKEN_ERROR,
+    TOKEN_KEYWORD_ERROR,
     TOKEN_EOF,
 
     // not to be used while scanning

@@ -70,6 +70,7 @@ void output_result(const TestResults* testresults, char* file)
     fprintf(resultfile, "Results:\n");
     for (int i = 0; i < testresults->count; i++)
     {
+        fprintf(resultfile, "Test case # %d\n", i + 1);
         output_case_result(testresults->results[i]);
     }
 

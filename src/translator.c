@@ -50,7 +50,14 @@ static void error(Token* token, const char* message)
         fprintf(stderr, " at '%.*s'", token->length, token->start);
     }
 
-    fprintf(stderr, " : %s\n", message);
+    if (token->type == TOKEN_KEYWORD_ERROR)
+    {
+        fprintf(stderr, " : Unrecognized keyword\n");
+    }
+    else
+    {
+        fprintf(stderr, " : %s\n", message);
+    }
     parser.haderror = true;
 }
 
@@ -63,6 +70,9 @@ static void advance()
     for (;;)
     {
         parser.current = scan_token();
+#ifdef DEBUG_MODE
+        //print_token(&parser.current);
+#endif
         if (parser.current.type == TOKEN_COMMENT) continue;
         if (parser.current.type != TOKEN_ERROR) break;
         error(&parser.current, parser.current.start);
@@ -147,6 +157,11 @@ static bool add_to_stream(Stream* stream)
 static void input()
 {
     TokenType datatype = get_data_type();
+    if (datatype == TOKEN_NONE)
+    {
+        error(&parser.current, "Not a data type.\n");
+        return;
+    }
     advance();
     consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
 
@@ -171,6 +186,11 @@ static void input()
 static void output()
 {
     TokenType datatype = get_data_type();
+    if (datatype == TOKEN_NONE)
+    {
+        error(&parser.current, "Not data type.\n");
+        return;
+    }
     advance();
     consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
 
@@ -246,7 +266,7 @@ TranslateResult translate(const char* source, IO* io)
 
     // =====================================================================================================================================================
     #ifdef DEBUG_MODE
-        printf("worked\n");
+        printf("debug info\n");
         print_io(translatingio); // remove
     #endif
 
