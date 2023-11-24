@@ -71,9 +71,11 @@ static void submit()
     compile(&sourcecode);
     init_result(&testresults, io.numtestcases);
     run(&sourcecode, io, &testresults, CRX_TEST);
-    print_result(&testresults);
+    output_result(&testresults, "result.txt");
     free_result(&testresults);
-    menu(PAUSE);
+    system("less result.txt");
+    // log?
+    system("rm -f result.txt");
 }
 
 static void check()
@@ -96,9 +98,11 @@ static void check()
     init_result(&testresults, io.numcheckcases);
     run(&sourcecode, io, &testresults, CRX_CHECK);
     printf("returned\n");
-    print_result(&testresults);
+    output_result(&testresults, "result.txt");
     free_result(&testresults);
-    menu(PAUSE);
+    system("less result.txt");
+    // log?
+    system("rm -f result.txt");
 }
 
 // =====================================================================================================================================================================================

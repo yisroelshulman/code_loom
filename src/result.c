@@ -3,6 +3,8 @@
 
 #include "result.h"
 
+FILE* resultfile;
+
 // initializes the testresults and returns true or false depending on if it worked
 bool init_result(TestResults* testresults, const int count)
 {
@@ -38,28 +40,38 @@ void free_result(TestResults* testresults)
 
 // prints to stdout the result from the testcase. with specified messages depending on if the test
 // passed or failed
-static void print_case_result(Result result)
+static void output_case_result(Result result)
 {
-    printf("On input: %s\n", result.input);
+    fprintf(resultfile, "On input: %s\n", result.input);
     switch (result.status)
     { 
         case PASS:
-            printf("result: pass\n\n");
+            fprintf(resultfile, "result: pass\n\n");
             return;
         case FAIL:
-            printf("result: fail\n");
-            printf("Expected: %s\n", result.expected);
-            printf("Received: %s\n\n", result.received);
+            fprintf(resultfile, "result: fail\n");
+            fprintf(resultfile, "Expected: %s\n", result.expected);
+            fprintf(resultfile, "Received: %s\n\n", result.received);
             return;
     }
 }
 
 // prints the results of the tests
-void print_result(const TestResults* testresults)
+void output_result(const TestResults* testresults, char* file)
 {
-    printf("Results:\n");
+
+    resultfile = fopen(file, "wb");
+    if (resultfile == NULL)
+    {
+        //error
+        return;
+    }
+
+    fprintf(resultfile, "Results:\n");
     for (int i = 0; i < testresults->count; i++)
     {
-        print_case_result(testresults->results[i]);
+        output_case_result(testresults->results[i]);
     }
+
+    fclose(resultfile);
 }

@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
                         TestResults testresults;
                         init_result(&testresults, io.numtestcases);
                         //run(&sourcecode, io, &testresults);
-                        print_result(&testresults);
+                        //print_result(&testresults);
                         free_result(&testresults);
                         free_io(&io);
                     }

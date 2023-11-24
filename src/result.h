@@ -52,10 +52,10 @@ bool init_result(TestResults* testresults, const int count);
 void free_result(TestResults* testresults);
 
 /*
- * The print_result function prints the results for all the testcase that were run
+ * The output_result function prints the results for all the testcase that were run
  * on a passed test the printer will print the input and that it passed.
  * on a failed test the printer will print the input, expected output, and the received output.
  */
-void print_result(const TestResults *testresults);
+void output_result(const TestResults *testresults, char* file);
 
 #endif
