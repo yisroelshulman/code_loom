@@ -1,2 +1,21 @@
 h or H      Help Menu.
 q or Q      Exit.
+
+Write a program that takes one, or two integers as command line arguments and does the following.
+If one integer was passed as the command line argument the program should sum all numbers from 0 to
+the integer and print the result. If two integers were passed ex. 1, 10, the program should sum the
+integers from the 1 to 10 and print the result.
+
+
+note: The endpoints are included in the sum.
+
+
+restrictions: the two integers are restricted as follows:
+     -1,000,000 <= to the two integers <= 1,000,000
+
+
+examples.
+
+    for the input 1, 8, print 36.
+
+    for the input 100, print 5050.

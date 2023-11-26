@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
                         IO io;
                         init_io(&io);
 
-                        char* source = read_file("program_tests/sum_ntom.sul");
+                        char *source = read_file("program_files/sum_ints_m_to_n.sul");
                         translate(source, &io);
                         free(source);
 
