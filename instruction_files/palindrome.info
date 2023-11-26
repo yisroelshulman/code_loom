@@ -1,5 +1,16 @@
 h or H      Help Menu.
 q or Q      Exit.
 
-Palindromes are strings that when ignoring non alphabetical characters read the same backward and
-forward.
+Palindromes as defined in the oxford english dictionary are: "a word, phrase, or sequence that reads
+the same backward as forward."
+In other words strings that when ignoring non alphabetical characters and their case read the same
+backward and forward.
+
+Write a program that takes a string of any length as a command line argument and prints true if the
+string is a palindrome, otherwise the program prints false.
+
+Examples.
+"A man, a plan, a canal, panama." the program should print true.
+"radar", the program should print true.
+"hello", the program should print false.
+"the art of code.", the program should print false.
