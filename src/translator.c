@@ -74,7 +74,7 @@ static void advance()
         //print_token(&parser.current);
 #endif
         if (parser.current.type == TOKEN_COMMENT) continue;
-        if (parser.current.type != TOKEN_ERROR) break;
+        if (parser.current.type != TOKEN_ERROR || parser.current.type != TOKEN_KEYWORD_ERROR) break;
         error(&parser.current, parser.current.start);
     }
 }
@@ -145,7 +145,7 @@ static bool add_to_stream(Stream* stream)
 {
     if (write_stream(stream, parser.previous) == 0)
     {
-        error(&parser.previous, "Could't add to stream.\n");
+        error(&parser.previous, "Could't add to stream.");
         return false;
     }
     return true;
@@ -158,27 +158,27 @@ static void input()
     TokenType datatype = get_data_type();
     if (datatype == TOKEN_NONE)
     {
-        error(&parser.current, "Not a data type.\n");
+        error(&parser.current, "Not a data type.");
         return;
     }
     advance();
-    consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
+    consume(TOKEN_COLON, "Expected ':' after data type declaration.");
 
     if (match(TOKEN_LIST))
     {
-        consume(TOKEN_LEFT_BRACKET, "Expected '[' to start a list.\n");
+        consume(TOKEN_LEFT_BRACKET, "Expected '[' to start a list.");
         while (match(datatype) && add_to_stream(&parser.testcase->input));
-        if (parser.testcase->input.length == 0) error(&parser.current, "Expected at least one list input.\n");
-        consume(TOKEN_RIGHT_BRACKET, "Expected ']' to end the list.\n");
+        if (parser.testcase->input.length == 0) error(&parser.current, "Expected at least one list input.");
+        consume(TOKEN_RIGHT_BRACKET, "Expected ']' to end the list.");
     }
     else
     {
         if (!match(datatype) || !add_to_stream(&parser.testcase->input))
         {
-            error(&parser.current, "Expected at least one input.\n");
+            error(&parser.current, "Expected at least one input.");
         }
     }
-    consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the input.\n");
+    consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the input.");
 }
 
 // parses the testcase output and adds it to the output stream
@@ -187,29 +187,29 @@ static void output()
     TokenType datatype = get_data_type();
     if (datatype == TOKEN_NONE)
     {
-        error(&parser.current, "Not data type.\n");
+        error(&parser.current, "Not data type.");
         return;
     }
     advance();
-    consume(TOKEN_COLON, "Expected ':' after data type declaration.\n");
+    consume(TOKEN_COLON, "Expected ':' after data type declaration.");
 
     if (!match(datatype) || !add_to_stream(&parser.testcase->output))
     {
-        error(&parser.current, "Expected at least one output.\n");
+        error(&parser.current, "Expected exactly one valid output.");
     }
-    consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the output.\n");
+    consume(TOKEN_RIGHT_PARENT, "Expected ')' to end the output.");
 }
 
 // parses a testcase block and splits it into the input and the output
 static void block()
 {
-    consume(TOKEN_INPUT, "Expected 'input' at the start of a block.\n");
-    consume(TOKEN_LEFT_PARENT, "Expected '(' to start an input statement.\n");
+    consume(TOKEN_INPUT, "Expected 'input' at the start of a block.");
+    consume(TOKEN_LEFT_PARENT, "Expected '(' to start an input statement.");
     input();
-    consume(TOKEN_OUTPUT, "Expected 'output' after input statement.\n");
-    consume(TOKEN_LEFT_PARENT, "Expected (' to start an output statement.\n");
+    consume(TOKEN_OUTPUT, "Expected 'output' after input statement.");
+    consume(TOKEN_LEFT_PARENT, "Expected (' to start an output statement.");
     output();
-    consume(TOKEN_RIGHT_BRACE, "Expected '}' to end a test case.\n");
+    consume(TOKEN_RIGHT_BRACE, "Expected '}' to end a test case.");
 }
 
 // parses a testcase and if no error occurred during the translation the test case is added to the
@@ -221,7 +221,7 @@ static void test_case()
     parser.testcase = &testcase;
     parser.testcase->ischeckcase = match(TOKEN_CHECK);
     parser.isaddable = true;
-    consume(TOKEN_LEFT_BRACE, "Expected '{' to start a test case.\n");
+    consume(TOKEN_LEFT_BRACE, "Expected '{' to start a test case.");
 
     block();
 

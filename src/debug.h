@@ -4,7 +4,7 @@
 #include "io.h"
 #include "scanner.h"
 
-#define DEBUG_MODE
+//#define DEBUG_MODE
 
 void print_input(Stream *stream);
 void print_io(IO* io);

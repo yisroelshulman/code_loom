@@ -16,7 +16,7 @@ void print_output(Stream* stream)
 
 void print_case(TestCase* testcase)
 {
-    printf("is test case? %d\n", testcase->ischeckcase);
+    printf("is test case? %s\n", testcase->ischeckcase ? "true" : "false");
     print_input(&testcase->input);
     print_output(&testcase->output);
 }
