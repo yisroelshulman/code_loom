@@ -1,0 +1,5 @@
+h or H      Help Menu.
+q or Q      Exit.
+
+Palindromes are strings that when ignoring non alphabetical characters read the same backward and
+forward.

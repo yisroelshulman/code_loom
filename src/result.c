@@ -67,6 +67,8 @@ void output_result(const TestResults* testresults, char* file)
         return;
     }
 
+    fprintf(resultfile, "h or H\t\tHelp Menu.\n");
+    fprintf(resultfile, "q or Q\t\tExit.\n\n");
     fprintf(resultfile, "Results:\n");
     for (int i = 0; i < testresults->count; i++)
     {

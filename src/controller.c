@@ -13,7 +13,9 @@
 IO io;
 TestResults testresults;
 
-#define DEFAULT_FILE "input.sul"
+#define SUL_DEFAULT_FILE "input.sul"
+#define CMD_PALINDROME_INSTRUCTIONS "less instruction_files/palindrome.info"
+#define CMD_SUM_INTS_M_TO_N_INSTRUCTIONS "less instruction_files/sum_ints_m_to_n.info"
 
 // consumes the characters in stdin until a newline character is read
 static void consume()
@@ -144,6 +146,8 @@ static void run_controller(char *sourcecode)
     return;
 }
 
+
+
 static void problem_list()
 {
     while (1)
@@ -151,9 +155,11 @@ static void problem_list()
         switch (menu(PROBLEM_LIST_MENU))
         {
             case PALINDROME:
+                system(CMD_PALINDROME_INSTRUCTIONS);
                 printf("palindrome.\n");
                 break;
             case SUM_INTS_M_TO_N:
+                system(CMD_SUM_INTS_M_TO_N_INSTRUCTIONS);
                 printf("sum ints m-n\n");
                 break;
             case BACK:
@@ -179,7 +185,7 @@ void start()
                 printf("help\n");
                 break;
             case DEFAULT_PROBLEM:
-                run_controller(DEFAULT_FILE);
+                run_controller(SUL_DEFAULT_FILE);
                 break;
             case PROBLEM_LIST:
                 problem_list();
