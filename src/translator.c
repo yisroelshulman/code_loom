@@ -110,13 +110,12 @@ static void consume(TokenType type, const char* message)
 // block or the end of the file
 static void synchronize()
 {
-    parser.panicmode = false;
-
     while (parser.current.type != TOKEN_EOF)
     {
-        if (parser.previous.type == TOKEN_RIGHT_BRACE) return;
         switch(parser.current.type)
         {
+            case TOKEN_RIGHT_BRACE:
+                advance();
             case TOKEN_LEFT_BRACE:
             case TOKEN_CHECK:
                 return;
@@ -222,7 +221,7 @@ static void test_case()
     parser.testcase = &testcase;
     parser.testcase->ischeckcase = match(TOKEN_CHECK);
     parser.isaddable = true;
-    consume(TOKEN_LEFT_BRACE, "Expected '{' to start a test case.\n"); 
+    consume(TOKEN_LEFT_BRACE, "Expected '{' to start a test case.\n");
 
     block();
 
@@ -230,6 +229,7 @@ static void test_case()
     if (parser.panicmode)
     {
         synchronize();
+        parser.panicmode = false;
         free_test_case(&testcase);
     }
     return;
