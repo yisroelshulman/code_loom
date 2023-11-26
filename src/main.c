@@ -85,11 +85,10 @@ int main(int argc, char *argv[])
                 {
                     IO io;
                     init_io(&io);
-
-                    char* source = read_file(argv[2]);
+                    char *source = read_file(argv[2]);
                     translate(source, &io);
                     free(source);
-
+                    free_io(&io);
                     break;
                 }
                 default:

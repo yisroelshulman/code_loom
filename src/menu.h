@@ -7,7 +7,6 @@ typedef enum
     RUN,
     FILE_NAME_PROMPT,
     REPEAT_MENU,
-    PAUSE,
     PROBLEM_LIST_MENU
 } Menu;
 
@@ -22,6 +21,8 @@ typedef enum
     ADD_TEST_CASE,
     BACK,
     REPEAT,
+    PALINDROME,
+    SUM_INTS_M_TO_N,
     INVALID
 } Selection;
 

@@ -52,10 +52,13 @@ static void show_repeat_menu()
     last_line();
 }
 
-// the prompt that pauses until enter is hit
-static void show_pause()
+static void show_problem_list()
 {
-    printf("Hit enter or any key/s followed by enter to continue.\n");
+    first_line();
+    printf("\t1. palindrome\n");
+    printf("\t2. sum ints from m to n\n");
+    printf("\t3. back\n");
+    last_line();
 }
 
 // consumes the rest of stdin until the newline character
@@ -125,6 +128,21 @@ static Selection get_submit_selection()
     return INVALID; // unreachable
 }
 
+static Selection get_problem_list_selection()
+{
+    switch (to_int(read_selection()))
+    {
+    case 1:
+        return PALINDROME;
+    case 2:
+        return SUM_INTS_M_TO_N;
+    case 3:
+        return BACK;
+    default:
+        return INVALID;
+    }
+    return INVALID; // unreachable
+}
 
 // ==================================================================================================================================================================
 // remove the clear screen
@@ -155,10 +173,9 @@ Selection menu(Menu menu)
             clear_screen();
             show_repeat_menu();
             return get_submit_selection();
-        case PAUSE:
-            show_pause();
-            read_selection();
-            return INVALID;
+        case PROBLEM_LIST_MENU:
+            show_problem_list();
+            return get_problem_list_selection();
         default:
             return INVALID;
     }

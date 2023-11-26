@@ -144,6 +144,27 @@ static void run_controller(char *sourcecode)
     return;
 }
 
+static void problem_list()
+{
+    while (1)
+    {
+        switch (menu(PROBLEM_LIST_MENU))
+        {
+            case PALINDROME:
+                printf("palindrome.\n");
+                break;
+            case SUM_INTS_M_TO_N:
+                printf("sum ints m-n\n");
+                break;
+            case BACK:
+                printf("back.\n");
+                return;
+            default:
+                printf("Invalid selection.\n");
+        }
+    }
+}
+
 
 // ===============================================================================================================================================================================================
 // entry into the program when 0 args were passed
@@ -161,7 +182,7 @@ void start()
                 run_controller(DEFAULT_FILE);
                 break;
             case PROBLEM_LIST:
-                printf("problem list\n");
+                problem_list();
                 break;
             case EXIT:
                 printf("exit\n");
