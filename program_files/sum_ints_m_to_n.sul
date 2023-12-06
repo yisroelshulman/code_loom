@@ -5,130 +5,78 @@
 
 # 1. start < end
 {
-    input (
-        num: list [ 11 101 ]
-    )
-    output (
-        num: 5096
-    )
+    input ( num: list [ 11 101 ] )
+    output ( num: 5096 )
 }
 
 # 2. start > end
 {
-    input (
-        num: list [ 331 163]
-    )
-    output (
-        num: 41743
-    )
+    input ( num: list [ 331 163] )
+    output ( num: 41743 )
 }
 
 # 3. start = end
 {
-    input (
-        num: list [ 999 999]
-    )
-    output (
-        num: 999
-    )
+    input ( num: list [ 999 999] )
+    output ( num: 999 )
 }
 
 # 4. start = 0
 {
-    input (
-        num: list [ 0 256 ]
-    )
-    output (
-        num: 32896
-    )
+    input ( num: list [ 0 256 ] )
+    output ( num: 32896 )
 }
 
 # 5. start = -end
 {
-    input (
-        num: list [ 3698 -3698 ]
-    )
-    output (
-        num: 0
-    )
+    input ( num: list [ 3698 -3698 ] )
+    output ( num: 0 )
 }
 
 # 6. start < 0, end > 0
 {
-    input (
-        num: list [ -369 42]
-    )
-    output (
-        num: -67362
-    )
+    input ( num: list [ -369 42] )
+    output ( num: -67362 )
 }
 
 # 7. start < 0, end < 0
 {
-    input (
-        num: list [ -52 -9371 ]
-    )
-    output (
-        num: -43911180
-    )
+    input ( num: list [ -52 -9371 ] )
+    output ( num: -43911180 )
 }
 
 # 8. start = end = 0
 {
-    input (
-        num: list [ 0 0 ]
-    )
-    output (
-        num: 0
-    )
+    input ( num: list [ 0 0 ] )
+    output ( num: 0 )
 }
 
 # 9. end > 0
 {
-    input (
-        num: 974
-    )
-    output (
-        num: 474825
-    )
+    input ( num: 974 )
+    output ( num: 474825 )
 }
 
 # 10. end < 0
 {
-    input (
-        num: -42
-    )
-    output (
-        num: -903
-    )
+    input ( num: -42 )
+    output ( num: -903 )
 }
 
 # 11. end = 0
 {
-    input (
-        num: 0
-    )
-    output (
-        num: 0
-    )
+    input ( num: 0 )
+    output ( num: 0 )
 }
 
 # 12. sum > MAX_INT value
 {
-    input (
-        num: list [ 28 101269 ]
-    )
-    output (
-        num: 5127755437
-    )
+    input ( num: list [ 28 101269 ] )
+    output ( num: 5127755437 )
 }
 
 # 13. sum < MIN_INT value
 {
-    input (
-        num: list [ -36 -256311]
-    )
-    output (
-        num: -32847791886
-    )
+    input ( num: list [ -36 -256311] )
+    output ( num: -32847791886 )
 }

@@ -5,62 +5,38 @@
 
 # empty string
 {
-    input (
-        str: ""
-    )
-    output (
-        bool: true
-    )
+    input ( str: "" )
+    output ( bool: true )
 }
 
 # string of len 1
 {
-    input (
-        str: "I"
-    )
-    output (
-        bool: true
-    )
+    input ( str: "I" )
+    output ( bool: true )
 }
 
 # string of len 2
 {
-    input (
-        str: "Aa"
-    )
-    output (
-        bool: true
-    )
+    input ( str: "Aa" )
+    output ( bool: true )
 }
 
 # string of len > 2 where len is odd
 {
-    input (
-        str: "Racecar"
-    )
-    output (
-        bool: true
-    )
+    input ( str: "Racecar" )
+    output ( bool: true )
 }
 
 # string of len > 2 where len is even
 {
-    input (
-        str: "tattarrattat"
-    )
-    output (
-        bool: true
-    )
+    input ( str: "tattarrattat" )
+    output ( bool: true )
 }
 
 # string with special characters
 {
-    input (
-        str: "Mr. Owl ate my metal worm."
-    )
-    output (
-        bool: true
-    )
+    input ( str: "Mr. Owl ate my metal worm." )
+    output ( bool: true )
 }
 
 # ==================================================================
@@ -68,30 +44,18 @@
 
 # len is even
 {
-    input (
-        str: "hello world"
-    )
-    output (
-        bool: false
-    )
+    input ( str: "hello world" )
+    output ( bool: false )
 }
 
 # len is odd
 {
-    input (
-        str: "I like to code"
-    )
-    output (
-        bool: false
-    )
+    input ( str: "I like to code" )
+    output ( bool: false )
 }
 
 # one word
 {
-    input (
-        str: "palindrome"
-    )
-    output (
-        bool: false
-    )
+    input ( str: "palindrome" )
+    output ( bool: false )
 }

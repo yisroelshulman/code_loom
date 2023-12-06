@@ -1,571 +1,347 @@
 ## the valid input combinations with the check
-
 # valid 1. input num, output num
 check {
-    input (
-        num: 5
-    )
-    output (
-        num: 10
-    )
+    input ( num: 5 )
+    output ( num: 10 )
 }
 
 # valid 2. input num list, output num
 check {
-    input (
-        num: list [ 5 10 ]
-    )
-    output (
-        num: 20
-    )
+    input ( num: list [ 5 10 ] )
+    output ( num: 20 )
 }
 
 # valid 3. input num, output bool
 check {
-    input (
-        num: 5
-    )
-    output (
-        bool: true
-    )
+    input ( num: 5 )
+    output ( bool: true )
 }
 
 # valid 4. input num list, output bool
 check {
-    input (
-        num: list [ 5 10]
-    )
-    output (
-        bool: false
-    )
+    input ( num: list [ 5 10] )
+    output ( bool: false )
 }
 
 # valid 5. input num, output str
 check {
-    input (
-        num: 5
-    )
-    output (
-        str: "valid"
-    )
+    input ( num: 5 )
+    output ( str: "valid" )
 }
 
 # valid 6. input num list, output str
 check {
-    input (
-        num: list [ 5 10]
-    )
-    output (
-        str: "valid"
-    )
+    input ( num: list [ 5 10] )
+    output ( str: "valid" )
 }
 
 # valid 7. input bool, output num
 check {
-    input (
-        bool: true
-    )
-    output (
-        num: 10
-    )
+    input ( bool: true )
+    output ( num: 10 )
 }
 
 # valid 8. input bool list, output num
 check {
-    input (
-        bool: list [ true false ]
-    )
-    output (
-        num: 20
-    )
+    input ( bool: list [ true false ] )
+    output ( num: 20 )
 }
 
 # valid 9. input bool, output bool
 check {
-    input (
-        bool: true
-    )
-    output (
-        bool: true
-    )
+    input ( bool: true )
+    output ( bool: true )
 }
 
 # valid 10. input bool list, output bool
 check {
-    input (
-        bool: list [ true false ]
-    )
-    output (
-        bool: false
-    )
+    input ( bool: list [ true false ] )
+    output ( bool: false )
 }
 
 # valid 11. input bool, output str
 check {
-    input (
-        bool: true
-    )
-    output (
-        str: "valid"
-    )
+    input ( bool: true )
+    output ( str: "valid" )
 }
 
 # valid 12. input bool list, output str
 check {
-    input (
-        bool: list [ true false ]
-    )
-    output (
-        str: "valid"
-    )
+    input ( bool: list [ true false ] )
+    output ( str: "valid" )
 }
 
 # valid 13. input str, output num
 check {
-    input (
-        str: "string"
-    )
-    output (
-        num: 10
-    )
+    input ( str: "string" )
+    output ( num: 10 )
 }
 
 # valid 14. input str list, output num
 check {
-    input (
-        str: list [ "string 1" "string 2" ]
-    )
-    output (
-        num: 20
-    )
+    input ( str: list [ "string 1" "string 2" ] )
+    output ( num: 20 )
 }
 
 # valid 15. input str, output bool
 check {
-    input (
-        str: "string"
-    )
-    output (
-        bool: true
-    )
+    input ( str: "string" )
+    output ( bool: true )
 }
 
 # valid 16. input str list, output bool
 check {
-    input (
-        str: list [ "string 1" "string 2" ]
-    )
-    output (
-        bool: false
-    )
+    input ( str: list [ "string 1" "string 2" ] )
+    output ( bool: false )
 }
 
 # valid 17. input str, output str
 check {
-    input (
-        str: "string"
-    )
-    output (
-        str: "valid"
-    )
+    input ( str: "string" )
+    output ( str: "valid" )
 }
 
 # valid 18. input str bool, output str
 check {
-    input (
-        str: list [ "string 1" "string 2" ]
-    )
-    output (
-        str: "valid"
-    )
+    input ( str: list [ "string 1" "string 2" ] )
+    output ( str: "valid" )
 }
 
 # valid 19. list with 1 entry
 check {
-    input (
-        str: list [ "string 1" ]
-    )
-    output (
-        str: "valid"
-    )
+    input ( str: list [ "string 1" ] )
+    output ( str: 'valid' )
 }
 
 # valid 20. list with more than 2 entries
 check {
-    input (
-        str: list [ "string 1" "string 2" "string 3" ]
-    )
-    output (
-        str: "valid"
-    )
+    input ( str: list [ "string 1" 'string 2' "string 3" ] )
+    output ( str: "valid" )
 }
 
+# valid 21. no spaces
+check{input(num:2.6)output(str:'string')}
 
-# the error combinations with the check
-
+### the error combinations with the check
 # error 1. illegal character to start block
 check .
-    input (
-        str: "test"
-    )
-    output (
-        bool: true
-    )
+    input ( str: "test" )
+    output ( bool: true )
 }
 
 # error 2. unexpected character to start block
 check (
-    input (
-        str: "test"
-    )
-    output (
-        bool: true
-    )
+    input ( str: "test" )
+    output ( bool: true )
 }
 
 # error 3. illegal character after block start
 check {
     ;
-    input (
-        bool: false
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: false )
+    output ( str: "test 2" )
 }
 
 # error 4. misspelled input
 check {
-    inpt (
-        bool: false
-    )
-    output (
-        str: "test 2"
-    )
+    inpt ( bool: false )
+    output ( str: "test 2" )
 }
 
 # error 5. illegal character after input keyword
 check {
-    input ! (
-        bool: false
-    )
-    output (
-        str: "test 2"
-    )
+    input ! ( bool: false )
+    output ( str: "test 2" )
 }
 
 # error 6. illegal character after input start
 check {
-    input ( @
-        bool: false
-    )
-    output (
-        str: "test 2"
-    )
+    input ( @ bool: false )
+    output ( str: "test 2" )
 }
 
 # error 7. misspelled input data type
 check {
-    input (
-        bol: false
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bol: false )
+    output ( str: "test 2" )
 }
 
 # error 8. unexpected character after input data type declaration
 check {
-    input (
-        bool[ false
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool[ false )
+    output ( str: "test 2" )
 }
 
 # error 9. mismatched input data type and value
 check {
-    input (
-        bool: 5
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: 5 )
+    output ( str: "test 2" )
 }
 
 # error 10. misspelled input value
 check {
-    input (
-        bool: tru
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: tru )
+    output ( str: "test 2" )
 }
 
 # error 11. misspelled input list
 check {
-    input (
-        bool: lst [ true false ]
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: lst [ true false ] )
+    output ( str: "test 2" )
 }
 
 # error 12. illegal character after input list
 check {
-    input (
-        bool: list + [ true false ]
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: list + [ true false ] )
+    output ( str: "test 2" )
 }
 
 # error 13. unexprected character to start input list
 check {
-    input (
-        bool: list ( true false ]
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: list ( true false ] )
+    output ( str: "test 2" )
 }
 
 # error 14. empty input list
 check {
-    input (
-        bool: list [ ]
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: list [ ] )
+    output ( str: "test 2" )
 }
 
 # error 15. input list data types inconsistant
 check {
-    input (
-        bool: list [ true "string" ]
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: list [ true "string" ] )
+    output ( str: "test 2" )
 }
 
 # error 16. input list data types dont match declaration
 check {
-    input (
-        bool: list [ 1 2 ]
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: list [ 1 2 ] )
+    output ( str: "test 2" )
 }
 
 # error 17. unexprected character to end input list
 check {
-    input (
-        bool: list [ true false )
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: list [ true false ) )
+    output ( str: "test 2" )
 }
 
 # error 18. illegal character to end input
 check {
-    input (
-        bool: true
-    _
-    output (
-        str: "test 2"
-    )
+    input ( bool: true _
+    output ( str: "test 2" )
 }
 
 # error 19. illegal character between input and output
 check {
-    input (
-        bool: true
-    )
+    input ( bool: true )
     ^
-    output (
-        str: "test 2"
-    )
+    output ( str: "test 2" )
 }
 
 # error 20. misspelled output
 check {
-    input (
-        bool: true
-    )
-    outpt (
-        str: "test 2"
-    )
+    input ( bool: true )
+    outpt ( str: "test 2" )
 }
 
 # error 21. illegal character after output keyword
 check {
-    input (
-        bool: false
-    )
-    output ! (
-        str: "test 2"
-    )
+    input ( bool: false )
+    output ! ( str: "test 2" )
 }
 
 # error 22. illegal character after output start
 check {
-    input (
-        bool: false
-    )
-    output ( @
-        str: "test 2"
-    )
+    input ( bool: false )
+    output ( @ str: "test 2" )
 }
 
 # error 23. misspelled output data type
 check {
-    input (
-        bool: false
-    )
-    output (
-        st: "test 2"
-    )
+    input ( bool: false )
+    output ( st: "test 2" )
 }
 
 # error 24. unexpected character after output data type declaration
 check {
-    input (
-        bool: false
-    )
-    output (
-        str[ "test 2"
-    )
+    input ( bool: false )
+    output ( str[ "test 2" )
 }
 
 # error 25. mismatched output data type and value
 check {
-    input (
-        bool: true
-    )
-    output (
-        str: 5
-    )
+    input ( bool: true )
+    output ( str: 5 )
 }
 
 # error 26. misspelled output value
 check {
-    input (
-        bool: true
-    )
-    output (
-        bool: fals
-    )
+    input ( bool: true )
+    output ( bool: fals )
 }
 
 # error 27. list in the output
 check {
-    input (
-        bool: true
-    )
-    output (
-        str: list [ "string 1" "string 2" ]
-    )
+    input ( bool: true )
+    output ( str: list [ "string 1" "string 2" ] )
 }
 
 # error 28. illegal character to end output
 check {
-    input (
-        bool: true
-    )
-    output (
-        str: "test 2"
-    _
+    input ( bool: true )
+    output ( str: "test 2" _
 }
 
 # error 29. illegal character between output and end of block
 check {
-    input (
-        bool: true
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: true )
+    output ( str: "test 2" )
     ^
 }
 
 # error 30. unexpected character at end of block
 check {
-    input (
-        bool: true
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: true )
+    output ( str: "test 2" )
 ]
 
 # error 31. two keyword errors
 check {
-    inpt (
-        bool: true
-    )
-    outpt (
-        str: "test 2"
-    )
+    inpt ( bool: true )
+    outpt ( str: "test 2" )
 }
 
 # error 32. two unexpected character errors
 check {
     &
-    input (
-        bool: true
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: true )
+    output ( str: "test 2" )
     *
 }
 
 # error 33. one keyword error then one unexpected character error
 check {
-    inpt (
-        bool: true
-    )
-    output (
-        str: "test 2"
-    )
+    inpt ( bool: true )
+    output ( str: "test 2" )
     %
 }
 
 # error 34. one unexpected character error then one keyword error
 check {
     !
-    input (
-        bool: true
-    )
-    otput (
-        str: "test 2"
-    )
+    input ( bool: true )
+    otput ( str: "test 2" )
 }
 
 # error 35. misspelled check note the block is still added as a test case
 chck {
-    input (
-        bool: true
-    )
-    output (
-        str: "test 2"
-    )
+    input ( bool: true )
+    output ( str: "test 2" )
 }
 
 # error 36. unterminated string
 check {
-    input (
-        bool: true
-    )
-    output (
-        str: "test 2
-    )
+    input ( bool: true )
+    output ( str: "test 2 )
 }
