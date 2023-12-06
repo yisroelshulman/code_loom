@@ -1,2 +1,12 @@
 h or H      Help Menu.
 q or Q      Exit.
+
+-h or -help
+
+-default
+
+-l or -list
+
+-c or -check
+
+-s or -submit

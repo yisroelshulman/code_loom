@@ -1,3 +1,6 @@
+# shell
+SHELL = /bin/sh
+
 # variables
 CC = gcc
 CFLAGS = -g -Wall
@@ -6,7 +9,6 @@ SRC = src
 OBJ = obj
 FILES = src/main.c src/file.c src/scanner.c src/translator.c src/io.c src/crx.c src/result.c src/comparator.c src/menu.c src/controller.c src/debug.c
 OBJECTS = obj/main.o obj/file.o obj/crx.o obj/scanner.o obj/translator.o obj/io.o obj/result.o obj/comparator.o obj/menu.o obj/controller.o obj/debug.o
-
 
 all:
 	$(CC) $(CFLAGS) $(FILES)
