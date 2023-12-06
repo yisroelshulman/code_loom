@@ -14,6 +14,8 @@ IO io;
 TestResults testresults;
 
 #define SUL_DEFAULT_FILE "input.sul"
+#define SUL_PALINDROME_FILE "program_files/palindrome.sul"
+#define SUL_SUM_INTS_M_TO_N "program_files/sum_ints_m_to_n.sul"
 #define CMD_PALINDROME_INSTRUCTIONS "less instruction_files/palindrome.info"
 #define CMD_SUM_INTS_M_TO_N_INSTRUCTIONS "less instruction_files/sum_ints_m_to_n.info"
 
@@ -130,10 +132,6 @@ static void run_controller(char *sourcecode)
                 submit();
                 loop = 0;
                 break;
-            case ADD_TEST_CASE:
-                printf("add test case\n");
-                loop = 0;
-                break;
             case BACK:
                 printf("back\n");
                 loop = 0;
@@ -156,12 +154,12 @@ static void problem_list()
         {
             case PALINDROME:
                 system(CMD_PALINDROME_INSTRUCTIONS);
-                printf("palindrome.\n");
-                break;
+                run_controller(SUL_PALINDROME_FILE);
+                return;
             case SUM_INTS_M_TO_N:
                 system(CMD_SUM_INTS_M_TO_N_INSTRUCTIONS);
-                printf("sum ints m-n\n");
-                break;
+                run_controller(SUL_SUM_INTS_M_TO_N);
+                return;
             case BACK:
                 printf("back.\n");
                 return;
