@@ -18,7 +18,6 @@ typedef enum
     EXIT,
     CHECK,
     SUBMIT,
-    ADD_TEST_CASE,
     BACK,
     REPEAT,
     PALINDROME,

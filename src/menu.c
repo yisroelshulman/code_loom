@@ -1,40 +1,51 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "menu.h"
 
-// the first line of the menu prompt
-static void first_line()
+#define MAX_LINE_WIDTH 80
+
+// prompt to make the selection
+static void prompt_selection()
 {
-    printf("Please select from the following options:\n\n");
+    printf("Please select from the following options:\n");
+    printf("[to make a selection please enter the number associated with the selection.]\n\n");
 }
 
-// the last line of the menu prompt
-static void last_line()
+// dashed line separator
+static void line_separator()
 {
-    printf("\nto make a selection please enter the number associated with the selection.\n");
+    for (int i = 0; i < MAX_LINE_WIDTH; i++)
+    {
+        printf("-");
+    }
+    printf("\n");
 }
 
 // the selection menu options that the user can choose from
 static void show_selection_menu()
-{ 
-    first_line();
+{
+    char* menu = "Main Menu";
+    printf("%*s%s\n", (int)(MAX_LINE_WIDTH - strlen(menu)) / 2, "", menu);
+    line_separator();
+    prompt_selection();
     printf("\t1. help\n");
     printf("\t2. default problem\n");
     printf("\t3. problem list\n");
     printf("\t4. exit\n");
-    last_line();
 }
 
 // the run menu options that the user can choose from
 static void show_run_menu()
 {
-    first_line();
+    char* menu = "Run Menu";
+    printf("%*s%s\n", (int)(MAX_LINE_WIDTH - strlen(menu)) / 2, "", menu);
+    line_separator();
+    prompt_selection();
     printf("\t1. check\n");
     printf("\t2. submit\n");
-    printf("\t3. add test case\n");
-    printf("\t4. back\n");
-    last_line();
+    printf("\t3. back to main menu\n");
 }
 
 // the submit prompt
@@ -46,19 +57,20 @@ static void show_filename_prompt()
 // the submit menu
 static void show_repeat_menu()
 {
-    first_line();
+    prompt_selection();
     printf("\t1. try again\n");
     printf("\t2. back\n");
-    last_line();
 }
 
 static void show_problem_list()
 {
-    first_line();
+    char* menu = "Program List Menu";
+    printf("%*s%s\n", (int)(MAX_LINE_WIDTH - strlen(menu)) / 2, "", menu);
+    line_separator();
+    prompt_selection();
     printf("\t1. palindrome\n");
     printf("\t2. sum ints from m to n\n");
-    printf("\t3. back\n");
-    last_line();
+    printf("\t3. back to main menu\n");
 }
 
 // consumes the rest of stdin until the newline character
@@ -109,8 +121,7 @@ static Selection get_run_selection()
     {
         case 1:     return CHECK;
         case 2:     return SUBMIT;
-        case 3:     return ADD_TEST_CASE;
-        case 4:     return BACK;
+        case 3:     return BACK;
         default:    return INVALID;
     }
     return INVALID; // unreachable
