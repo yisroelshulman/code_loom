@@ -1,12 +1,41 @@
 h or H      Help Menu.
 q or Q      Exit.
 
+
+
+
+====================================================================================================
+===== help flags =====
+====================================================================================================
+
 -h or -help
+    help is used to bring up the help menu.
 
--default
+-hd or -h default
 
--l or -list
 
--c or -check
+-hl or -h list
+    list 
 
--s or -submit
+-hc or -h check
+    check is used when the user wants to run the program with the check cases. The check cases are
+usually general test cases to see if the program is functional to some capacity. The tests are not
+as rigorous and don't check many if any edge cases.
+
+-hs or -h submit
+    submit is used when the user wants to run the program with all the testcases. This would usually
+include more rigorous testing and  edge cases or special cases that are omitted when the check is
+run.
+
+====================================================================================================
+===== options =====
+====================================================================================================
+
+list
+check
+submit
+
+d or default
+p or program
+
+Notes:
