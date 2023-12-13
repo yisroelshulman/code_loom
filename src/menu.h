@@ -22,6 +22,7 @@ typedef enum
     REPEAT,
     PALINDROME,
     SUM_INTS_M_TO_N,
+    FIZZ_BUZZ,
     INVALID
 } Selection;
 

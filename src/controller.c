@@ -14,12 +14,14 @@
 IO io;
 TestResults testresults;
 
-#define NUM_PROGRAMS 2
+#define NUM_PROGRAMS 3
 #define SUL_DEFAULT_FILE "input.sul"
 #define SUL_PALINDROME_FILE "program_files/palindrome.sul"
 #define SUL_SUM_INTS_M_TO_N "program_files/sum_ints_m_to_n.sul"
+#define SUL_FIZZ_BUZZ "program_files/fizz_buzz.sul"
 #define CMD_PALINDROME_INSTRUCTIONS "less instruction_files/palindrome.info"
 #define CMD_SUM_INTS_M_TO_N_INSTRUCTIONS "less instruction_files/sum_ints_m_to_n.info"
+#define CMD_FIZZ_BUZZ_INSTRUCTIONS "less instruction_files/fizz_buzz.info"
 
 // consumes the characters in stdin until a newline character is read
 static void consume()
@@ -186,6 +188,9 @@ static void problem_list()
                 system(CMD_SUM_INTS_M_TO_N_INSTRUCTIONS);
                 run_controller(SUL_SUM_INTS_M_TO_N);
                 return;
+            case FIZZ_BUZZ:
+                system(CMD_FIZZ_BUZZ_INSTRUCTIONS);
+                run_controller(SUL_FIZZ_BUZZ);
             case BACK:
                 printf("back.\n");
                 return;
@@ -378,6 +383,10 @@ int start_two(char *flag, char *option)
             case 2:
                 system(CMD_SUM_INTS_M_TO_N_INSTRUCTIONS);
                 run_controller(SUL_SUM_INTS_M_TO_N);
+                return 0;
+            case 3:
+                system(CMD_FIZZ_BUZZ_INSTRUCTIONS);
+                run_controller(SUL_FIZZ_BUZZ);
                 return 0;
             default:
                 printf("error\n");

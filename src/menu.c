@@ -70,7 +70,8 @@ static void show_problem_list()
     prompt_selection();
     printf("\t1. palindrome\n");
     printf("\t2. sum ints from m to n\n");
-    printf("\t3. back\n");
+    printf("\t3. fizzbuzz");
+    printf("\t4. back\n");
 }
 
 // consumes the rest of stdin until the newline character
@@ -148,6 +149,8 @@ static Selection get_problem_list_selection()
     case 2:
         return SUM_INTS_M_TO_N;
     case 3:
+        return FIZZ_BUZZ;
+    case 4:
         return BACK;
     default:
         return INVALID;
