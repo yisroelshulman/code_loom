@@ -5,19 +5,22 @@
 
 int main(int argc, char *argv[])
 {
+    int exitcode = -1;
     switch (argc)
     {
         case 1:
-            start_zero();
-            exit(0);
+            exitcode = start_zero();
+            break;
         case 2:
-            start_one(argv[1]);
-            exit(2);
+            exitcode = start_one(argv[1]);
+            break;
         case 3:
-            start_two(argv[1], argv[2]);
-            exit(3);
+            exitcode = start_two(argv[1], argv[2]);
+            break;
         default:
             fprintf(stderr, "[%d] invalid number of args.\n", argc);
             exit(1);
     }
+    if (exitcode != 0) fprintf(stderr, "try running with -h or -help for help using this tool\n");
+    exit(exitcode);
 }
