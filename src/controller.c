@@ -146,7 +146,31 @@ static void run_controller(char *sourcecode)
     return;
 }
 
+static void run_check(char *sourcecode)
+{
+    init_io(&io);
+    char *source = read_file(sourcecode);
+    translate(source, &io);
+    free(source);
 
+    check();
+
+    free_io(&io);
+    return;
+}
+
+static void run_submit(char *sourcecode)
+{
+    init_io(&io);
+    char *source = read_file(sourcecode);
+    translate(source, &io);
+    free(source);
+
+    submit();
+
+    free_io(&io);
+    return;
+}
 
 static void problem_list()
 {
@@ -209,6 +233,7 @@ typedef enum
 {
     OP_CHECK,
     OP_DEFAULT,
+    OP_HELP,
     OP_LIST,
     OP_PROGRAM,
     OP_SUBMIT,
@@ -236,6 +261,58 @@ static OP get_op(char *option)
 
 int start_one(char *flag)
 {
+    switch (get_op(flag))
+    {
+        case OP_CHECK:
+            run_check(SUL_DEFAULT_FILE);
+            return 0;
+        case OP_DEFAULT:
+            run_controller(SUL_DEFAULT_FILE);
+            return 0;
+        case OP_LIST:
+            problem_list();
+            return 0;
+        case OP_SUBMIT:
+            run_submit(SUL_DEFAULT_FILE);
+            return 0;
+        default:
+            switch (flag[0])
+            {
+                case '-':
+                    if (match(flag, 1, 2, "h") || match(flag, 1, 5, "help"))
+                    {
+                        system("less -p -help help_files/help_file.info");
+                        return 0;
+                    }
+                    if (match(flag, 1, 3, "hc"))
+                    {
+                        system("less -p -hc help_files/help_file.info");
+                        return 0;
+                    }
+                    if (match(flag, 1, 3, "hd"))
+                    {
+                        system("less -p -hd help_files/help_file.info");
+                        return 0;
+                    }
+                    if (match(flag, 1, 3, "hl"))
+                    {
+                        system("less -p -hl help_files/help_file.info");
+                        return 0;
+                    }
+                    if (match(flag, 1, 3, "hp"))
+                    {
+                        system("less -p -hp help_files/help_file.info");
+                        return 0;
+                    }
+                    if (match(flag, 1, 3, "hs"))
+                    {
+                        system("less -p -hs help_files/help_file.info");
+                        return 0;
+                    }
+                default:
+                    return 56663;
+            }
+    }
     return 56663;
 }
 
@@ -286,7 +363,7 @@ int start_two(char *flag, char *option)
             case OP_SUBMIT:
                 system("less -p \"-h submit\" help_files/help_file.info");
                 return 0;
-            case OP_ERROR:
+            default:
                  return 56663;
         }
     }

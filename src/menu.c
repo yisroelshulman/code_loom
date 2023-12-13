@@ -70,7 +70,7 @@ static void show_problem_list()
     prompt_selection();
     printf("\t1. palindrome\n");
     printf("\t2. sum ints from m to n\n");
-    printf("\t3. back to main menu\n");
+    printf("\t3. back\n");
 }
 
 // consumes the rest of stdin until the newline character
