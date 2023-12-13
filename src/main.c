@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
             break;
         default:
             fprintf(stderr, "[%d] invalid number of args.\n", argc);
-            exit(1);
+            exitcode = 1;
     }
     if (exitcode != 0) fprintf(stderr, "try running with -h or -help for help using this tool\n");
     exit(exitcode);
