@@ -2,7 +2,13 @@ h or H      Help Menu.
 q or Q      Exit.
 
 
+====================================================================================================
+===== code loom info =====
+====================================================================================================
+code loom is a tool that allows the user to write a set of test cases and a source code file (in
+java) and test if the program passes all the test cases.
 
+The tool has some built in test files that the user can explore as well.
 
 ====================================================================================================
 ===== help flags =====
@@ -11,31 +17,37 @@ q or Q      Exit.
 -h or -help
     help is used to bring up the help menu.
 
--hd or -h default
-
-
--hl or -h list
-    list 
-
 -hc or -h check
     check is used when the user wants to run the program with the check cases. The check cases are
 usually general test cases to see if the program is functional to some capacity. The tests are not
-as rigorous and don't check many if any edge cases.
+as rigorous and don't check many if any edge cases. When the program is run with check as the
+argument the program will use the defualt file (input.sul) and run it with the check flag.
+
+-hd or -h default
+    default is used when the user is not sure which one they want to run between check and submit.
+default will run the program with the default file (input.sul).
+
+
+-hl or -h list
+    list will bring up a list of all the programs the tool has test files for. The user can then
+specify which one to run.
 
 -hs or -h submit
     submit is used when the user wants to run the program with all the testcases. This would usually
 include more rigorous testing and  edge cases or special cases that are omitted when the check is
-run.
+run. When the tool is run with submit as the argument the tool will use the default file (input.sul)
+and run it with the submit flag.
+
+-hp or -h program
+    program is used when the user wants to run a specific program that the tool has a test file for
+The user also needs to specify the number associated with the program (run list to see this).
+Example: "program 2" will run the second program in the lisr.
 
 ====================================================================================================
 ===== options =====
 ====================================================================================================
-
-list
 check
+default
+list
 submit
-
-d or default
-p or program
-
-Notes:
+program [int]
