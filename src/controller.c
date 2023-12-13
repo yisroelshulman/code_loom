@@ -206,7 +206,7 @@ int start_zero()
         switch (menu(SELECTION))
         {
             case HELP:
-                printf("help\n");
+                system("less help_files/help_file.info");
                 break;
             case DEFAULT_PROBLEM:
                 run_controller(SUL_DEFAULT_FILE);
@@ -281,7 +281,7 @@ int start_one(char *flag)
                 case '-':
                     if (match(flag, 1, 2, "h") || match(flag, 1, 5, "help"))
                     {
-                        system("less -p -help help_files/help_file.info");
+                        system("less help_files/help_file.info");
                         return 0;
                     }
                     if (match(flag, 1, 3, "hc"))
