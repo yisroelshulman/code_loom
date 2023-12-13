@@ -14,6 +14,7 @@
 IO io;
 TestResults testresults;
 
+#define NUM_PROGRAMS 2
 #define SUL_DEFAULT_FILE "input.sul"
 #define SUL_PALINDROME_FILE "program_files/palindrome.sul"
 #define SUL_SUM_INTS_M_TO_N "program_files/sum_ints_m_to_n.sul"
@@ -191,7 +192,7 @@ int start_zero()
                 break;
             case EXIT:
                 printf("exit\n");
-                return;
+                return 0;
             default:
                 printf("Invalid Selection\n");
         }
@@ -199,32 +200,38 @@ int start_zero()
     return 0;
 }
 
-static bool match(char *flag, const int offset, const int len, char *rest)
+static bool match(char *flag, const int offset, const int len, const char *rest)
 {
     return memcmp(flag + offset, rest, len) == 0;
 }
 
 typedef enum
 {
-    CHECK,
-    DEFAULT,
-    LIST,
-    PROGRAM,
-    SUBMIT,
-    ERROR
+    OP_CHECK,
+    OP_DEFAULT,
+    OP_LIST,
+    OP_PROGRAM,
+    OP_SUBMIT,
+    OP_ERROR
 } OP;
+
+static OP match_op(char *option, const int len, const char *rest, const OP type)
+{
+    if (match(option, 1, len, rest)) return type;
+    return OP_ERROR;
+}
 
 static OP get_op(char *option)
 {
     switch(option[0])
     {
-        case 'c': return match_op(option, 5, "heck", CHECK);
-        case 'd': return match_op(option, 7, "efault", DEFAULT);
-        case 'l': return match_op(option, 4, "ist", LIST);
-        case 'p': return match_op(option, 7, "rogram", PROGRAM);
-        case 's': return match_op(option, 6, "ubmit", SUBMIT);
+        case 'c': return match_op(option, 5, "heck", OP_CHECK);
+        case 'd': return match_op(option, 7, "efault", OP_DEFAULT);
+        case 'l': return match_op(option, 4, "ist", OP_LIST);
+        case 'p': return match_op(option, 7, "rogram", OP_PROGRAM);
+        case 's': return match_op(option, 6, "ubmit", OP_SUBMIT);
     }
-    return ERROR;
+    return OP_ERROR;
 }
 
 int start_one(char *flag)
@@ -232,6 +239,30 @@ int start_one(char *flag)
     return 56663;
 }
 
+static bool is_digit(char c)
+{
+    return c >= '0' && c <= '9';
+}
+
+static int my_atoi(char *str)
+{
+    int sum = 0;
+    while (*str)
+    {
+        if (is_digit(str[0]))
+        {
+            sum *= 10;
+            sum += str[0] - '0';
+        }
+        else
+        {
+            return -1;
+        }
+        str++;
+    }
+    if (sum > NUM_PROGRAMS) return -2;
+    return sum;
+}
 
 int start_two(char *flag, char *option)
 {
@@ -240,20 +271,42 @@ int start_two(char *flag, char *option)
     {
         switch (get_op(option))
         {
-            case CHECK:
-            case DEFAULT:
-            case LIST:
-            case PROGRAM:
-            case SUBMIT:
-            case ERROR:
+            case OP_CHECK:
+                system("less -p \"-h check\" help_files/help_file.info");
+                return 0;
+            case OP_DEFAULT:
+                system("less -p \"-h default\" help_files/help_file.info");
+                return 0;
+            case OP_LIST:
+                system("less -p \"-h list\" help_files/help_file.info");
+                return 0;
+            case OP_PROGRAM:
+                system("less -p \"-h program\" help_files/help_file.info");
+                return 0;
+            case OP_SUBMIT:
+                system("less -p \"-h submit\" help_files/help_file.info");
+                return 0;
+            case OP_ERROR:
+                 return 56663;
         }
     }
-    else if (match(flag, 0, 2, "p") || match(flag, 0, 8, "program"))
+    else if (match(flag, 0, 8, "program"))
     {
-
+        switch (my_atoi(option))
+        {
+            case 1:
+                system(CMD_PALINDROME_INSTRUCTIONS);
+                run_controller(SUL_PALINDROME_FILE);
+                return 0;
+            case 2:
+                system(CMD_SUM_INTS_M_TO_N_INSTRUCTIONS);
+                run_controller(SUL_SUM_INTS_M_TO_N);
+                return 0;
+            default:
+                printf("error\n");
+                return 56663;
+        }
     }
-    else
-        fprintf(stderr, "bad\n");
 
     return 56663;
 }

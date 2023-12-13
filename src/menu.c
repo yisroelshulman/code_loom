@@ -45,7 +45,7 @@ static void show_run_menu()
     prompt_selection();
     printf("\t1. check\n");
     printf("\t2. submit\n");
-    printf("\t3. back to main menu\n");
+    printf("\t3. back\n");
 }
 
 // the submit prompt
