@@ -1,0 +1,35 @@
+h or H      Help Menu.
+q or Q      Exit.
+
+
+The fizz buzz problem is a famous cs problem and is as follows.
+print the numbers 1 - 100 (inclusive) with the rules that if the number is divisible by 3, print
+Fizz if the number is divisible by 5 print Buzz if the number is divisible by both 3 and 5 print
+FizzBuzz. If non of these conditions are true the print the number.
+
+Example: The first 16 numbers in the sequence would be.
+1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz 16
+
+
+The challenge here is to write a program that takes either 0 or 4 command line arguments.
+
+if there are 0 args then the program should output the same as the classic fizz buzz problem.
+
+if there are 4 args the args will have the form int1 string1 int2 string2. where int represents a
+prime number and string represents the string that would would replace numbers divisible by the
+prime number in the sequence 1 - 100 and numbers divisible by both int1 and int2 should be replaced
+by string1string2.
+
+Example the classic fizz buzz problem can also be represented by the args:
+3 Fizz 5 Buzz
+Example:  for input args 5 hello 7 world the sequence would look like this:
+1 2 3 4 hello 6 world 8 ... 34 helloworld 36 ...
+
+
+Notes:
+The prime numbers are restricted by p < 20.
+
+If the program is called with an invalid number of arguments the program should print: 
+"invalid number of args".
+If the program is called with non primes the program should print:
+"not primes"
