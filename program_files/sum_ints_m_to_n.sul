@@ -4,7 +4,7 @@
 # we have the restrinctions that -1,000,000,000 <= input <= 1,000,000,000
 
 # 1. start < end
-{
+check {
     input ( num: list [ 11 101 ] )
     output ( num: 5096 )
 }
@@ -16,7 +16,7 @@
 }
 
 # 3. start = end
-{
+check {
     input ( num: list [ 999 999] )
     output ( num: 999 )
 }
@@ -46,13 +46,13 @@
 }
 
 # 8. start = end = 0
-{
+check {
     input ( num: list [ 0 0 ] )
     output ( num: 0 )
 }
 
 # 9. end > 0
-{
+check {
     input ( num: 974 )
     output ( num: 474825 )
 }

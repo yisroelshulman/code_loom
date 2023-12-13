@@ -22,7 +22,7 @@
 }
 
 # string of len > 2 where len is odd
-{
+check {
     input ( str: "Racecar" )
     output ( bool: true )
 }
@@ -34,7 +34,7 @@
 }
 
 # string with special characters
-{
+check {
     input ( str: "Mr. Owl ate my metal worm." )
     output ( bool: true )
 }
@@ -43,7 +43,7 @@
 # 3 non palindromes
 
 # len is even
-{
+check {
     input ( str: "hello world" )
     output ( bool: false )
 }
