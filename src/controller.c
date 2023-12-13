@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "controller.h"
 #include "crx.h"
@@ -173,7 +174,7 @@ static void problem_list()
 // ===============================================================================================================================================================================================
 // entry into the program when 0 args were passed
 // brings up the selection menu
-void start()
+int start_zero()
 {
     while (1)
     {
@@ -195,4 +196,64 @@ void start()
                 printf("Invalid Selection\n");
         }
     }
+    return 0;
+}
+
+static bool match(char *flag, const int offset, const int len, char *rest)
+{
+    return memcmp(flag + offset, rest, len) == 0;
+}
+
+typedef enum
+{
+    CHECK,
+    DEFAULT,
+    LIST,
+    PROGRAM,
+    SUBMIT,
+    ERROR
+} OP;
+
+static OP get_op(char *option)
+{
+    switch(option[0])
+    {
+        case 'c': return match_op(option, 5, "heck", CHECK);
+        case 'd': return match_op(option, 7, "efault", DEFAULT);
+        case 'l': return match_op(option, 4, "ist", LIST);
+        case 'p': return match_op(option, 7, "rogram", PROGRAM);
+        case 's': return match_op(option, 6, "ubmit", SUBMIT);
+    }
+    return ERROR;
+}
+
+int start_one(char *flag)
+{
+    return 56663;
+}
+
+
+int start_two(char *flag, char *option)
+{
+    printf("%s\n", flag);
+    if (match(flag, 0, 3, "-h") || match(flag, 0, 6, "-help")) // len + 1 for nul terminator
+    {
+        switch (get_op(option))
+        {
+            case CHECK:
+            case DEFAULT:
+            case LIST:
+            case PROGRAM:
+            case SUBMIT:
+            case ERROR:
+        }
+    }
+    else if (match(flag, 0, 2, "p") || match(flag, 0, 8, "program"))
+    {
+
+    }
+    else
+        fprintf(stderr, "bad\n");
+
+    return 56663;
 }
