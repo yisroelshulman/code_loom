@@ -70,7 +70,7 @@ static void show_problem_list()
     prompt_selection();
     printf("\t1. palindrome\n");
     printf("\t2. sum ints from m to n\n");
-    printf("\t3. fizzbuzz");
+    printf("\t3. fizzbuzz\n");
     printf("\t4. back\n");
 }
 

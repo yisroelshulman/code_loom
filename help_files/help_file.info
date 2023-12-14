@@ -21,7 +21,7 @@ The tool has some built in test files that the user can explore as well.
     check is used when the user wants to run the program with the check cases. The check cases are
 usually general test cases to see if the program is functional to some capacity. The tests are not
 as rigorous and don't check many if any edge cases. When the program is run with check as the
-argument the program will use the defualt file (input.sul) and run it with the check flag.
+argument the program will use the default file (input.sul) and run it with the check flag.
 
 -hd or -h default
     default is used when the user is not sure which one they want to run between check and submit.
@@ -41,7 +41,7 @@ and run it with the submit flag.
 -hp or -h program
     program is used when the user wants to run a specific program that the tool has a test file for
 The user also needs to specify the number associated with the program (run list to see this).
-Example: "program 2" will run the second program in the lisr.
+Example: "program 2" will run the second program in the list.
 
 ====================================================================================================
 ===== options =====
