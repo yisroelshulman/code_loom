@@ -1,0 +1,25 @@
+{
+  "name": "sul-lang",
+  "displayName": "sul-lang",
+  "description": "Syntax highlighting for the sul lang",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "sul",
+      "aliases": ["SUL", "sul"],
+      "extensions": [".sul"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "sul",
+      "scopeName": "source.sul",
+      "path": "./syntaxes/sul.tmLanguage.json"
+    }]
+  }
+}
