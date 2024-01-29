@@ -4,7 +4,6 @@ My CS degree capstone project
 ## Description (What)
 Compile, run, and compare the output of Java programs agaisnt a suite of user provided test cases and report back to the user which passed and which failed.
 
-## "Why?" (Motivation/Goal/Problem to solve)
 ## Quick Start (how)
 `dependencies`
 - GNU Make
