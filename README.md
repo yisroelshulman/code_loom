@@ -31,7 +31,8 @@ This will create a new executable a.out and is now ready.
 
 ## Usage
 Read the [SUL Manual][].\
-Read the[Code Loom Manual][].\
+Read the [Code Loom Manual][].\
+
 [SUL Manual]: https://docs.google.com/document/d/1Orgrxw0ZMv2xZduPHcYj2XTZWCJz-M6pQKo-W9VO2o0/edit?usp=sharing
 [Code Loom Manual]: https://docs.google.com/document/d/1LsW59idS7LsewdEUGofjYueIyXoyFe6hmMkGVkKrmfE/edit?usp=sharing
 
