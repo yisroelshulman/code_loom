@@ -30,8 +30,10 @@ make
 This will create a new executable a.out and is now ready.
 
 ## Usage
-[SUL Manual](https://docs.google.com/document/d/1Orgrxw0ZMv2xZduPHcYj2XTZWCJz-M6pQKo-W9VO2o0/edit?usp=sharing)
-[Code Loom Manual](https://docs.google.com/document/d/1LsW59idS7LsewdEUGofjYueIyXoyFe6hmMkGVkKrmfE/edit?usp=sharing)
+- [SUL Manual][]
+- [Code Loom Manual][]
+[SUL Manual]: https://docs.google.com/document/d/1Orgrxw0ZMv2xZduPHcYj2XTZWCJz-M6pQKo-W9VO2o0/edit?usp=sharing
+[Code Loom Manual]: https://docs.google.com/document/d/1LsW59idS7LsewdEUGofjYueIyXoyFe6hmMkGVkKrmfE/edit?usp=sharing
 
 To use the tool create a input.sul file with the test cases.\
 Write a java source code file.\
