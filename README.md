@@ -2,7 +2,7 @@
 My CS degree capstone project
 
 ## Description (What)
-Compile, run, and compare the output of Java programs agaisnt a suite of user provided test cases and report back to the user which passed and which failed.
+Compile, run, and compare the output of Java programs against a suite of user provided test cases and report back to the user which passed and which failed.
 
 ## Quick Start (how)
 `dependencies`
@@ -44,4 +44,4 @@ run
 ```
 And follow the prompt to run with check or test cases to see the results.
 
-Or you you can write a file and test against one of the built in coding problems.
+Or you can write a file and test against one of the built in coding problems.
