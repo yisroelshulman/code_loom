@@ -42,4 +42,6 @@ run
 ```
 ./a.out default
 ```
-And follow the propmpt to run with check or test cases to see the results.
+And follow the prompt to run with check or test cases to see the results.
+
+Or you you can write a file and test against one of the built in coding problems.
